@@ -1,0 +1,13 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.Tela_Login_Tela_Cadastro" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/azul1</item>
+    </style>
+
+    <style name="roundedImageViewRounded">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="Theme.Tela_Login_Tela_Cadastro" parent="Base.Theme.Tela_Login_Tela_Cadastro" />
+</resources>
