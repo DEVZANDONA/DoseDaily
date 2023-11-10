@@ -1,0 +1,117 @@
+[debug] [2023-11-06T20:47:17.610Z] ----------------------------------------------------------------------
+[debug] [2023-11-06T20:47:17.612Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Pichau\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init functions
+[debug] [2023-11-06T20:47:17.612Z] CLI Version:   12.8.0
+[debug] [2023-11-06T20:47:17.612Z] Platform:      win32
+[debug] [2023-11-06T20:47:17.612Z] Node Version:  v20.9.0
+[debug] [2023-11-06T20:47:17.613Z] Time:          Mon Nov 06 2023 17:47:17 GMT-0300 (Horário Padrão de Brasília)
+[debug] [2023-11-06T20:47:17.613Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-11-06T20:47:17.617Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-11-06T20:47:17.618Z] > authorizing via signed-in user (pedruco.zandona@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\Pichau\Desktop\pasta TCC\Android Projetos\Tela_Login_Tela_Cadastro
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[info] i  If you want to create a project in a Google Cloud organization or folder, please use "firebase projects:create" instead, and return to this command when you've created the project. 
+[debug] [2023-11-06T20:47:46.568Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects [none]
+[debug] [2023-11-06T20:47:46.568Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects {"projectId":"DoseDaily","name":"dose-app"}
+[debug] [2023-11-06T20:47:47.702Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects 400
+[debug] [2023-11-06T20:47:47.702Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects {"error":{"code":400,"message":"field [project_id] has issue [project_id contains invalid characters]","status":"INVALID_ARGUMENT","details":[{"@type":"type.googleapis.com/google.rpc.BadRequest","fieldViolations":[{"field":"project_id","description":"project_id contains invalid characters"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"url":"https://cloud.google.com/resource-manager/reference/rest/v1/projects"}]}]}}
+[debug] [2023-11-06T20:47:47.958Z] FirebaseError: HTTP Error: 400, field [project_id] has issue [project_id contains invalid characters]
+    at responseToError (C:\Users\Pichau\AppData\Roaming\npm\node_modules\firebase-tools\lib\responseToError.js:49:12)
+    at RetryOperation._fn (C:\Users\Pichau\AppData\Roaming\npm\node_modules\firebase-tools\lib\apiv2.js:285:77)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[error] 
+[error] Error: Failed to create project. See firebase-debug.log for more info.
+[debug] [2023-11-06T20:48:02.198Z] ----------------------------------------------------------------------
+[debug] [2023-11-06T20:48:02.200Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Pichau\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init functions
+[debug] [2023-11-06T20:48:02.201Z] CLI Version:   12.8.0
+[debug] [2023-11-06T20:48:02.201Z] Platform:      win32
+[debug] [2023-11-06T20:48:02.201Z] Node Version:  v20.9.0
+[debug] [2023-11-06T20:48:02.201Z] Time:          Mon Nov 06 2023 17:48:02 GMT-0300 (Horário Padrão de Brasília)
+[debug] [2023-11-06T20:48:02.201Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-11-06T20:48:02.206Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-11-06T20:48:02.206Z] > authorizing via signed-in user (pedruco.zandona@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\Pichau\Desktop\pasta TCC\Android Projetos\Tela_Login_Tela_Cadastro
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2023-11-06T20:48:05.363Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects pageSize=100
+[debug] [2023-11-06T20:48:06.245Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects 200
+[debug] [2023-11-06T20:48:06.245Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects [omitted]
+[info] i  Using project dosedaily-app (dosedaily-app) 
+[info] 
+=== Functions Setup
+[debug] [2023-11-06T20:48:08.389Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-11-06T20:48:08.390Z] > authorizing via signed-in user (pedruco.zandona@gmail.com)
+[debug] [2023-11-06T20:48:08.390Z] [iam] checking project dosedaily-app for permissions ["firebase.projects.get"]
+[debug] [2023-11-06T20:48:08.390Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/dosedaily-app:testIamPermissions [none]
+[debug] [2023-11-06T20:48:08.390Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/dosedaily-app:testIamPermissions x-goog-quota-user=projects/dosedaily-app
+[debug] [2023-11-06T20:48:08.390Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/dosedaily-app:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2023-11-06T20:48:09.332Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/dosedaily-app:testIamPermissions 200
+[debug] [2023-11-06T20:48:09.332Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/dosedaily-app:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2023-11-06T20:48:09.333Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/dosedaily-app/services/cloudfunctions.googleapis.com [none]
+[debug] [2023-11-06T20:48:09.333Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/dosedaily-app/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/dosedaily-app
+[debug] [2023-11-06T20:48:09.333Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/dosedaily-app/services/runtimeconfig.googleapis.com [none]
+[debug] [2023-11-06T20:48:09.334Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/dosedaily-app/services/runtimeconfig.googleapis.com x-goog-quota-user=projects/dosedaily-app
+[debug] [2023-11-06T20:48:10.603Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/dosedaily-app/services/cloudfunctions.googleapis.com 200
+[debug] [2023-11-06T20:48:10.603Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/dosedaily-app/services/cloudfunctions.googleapis.com [omitted]
+[debug] [2023-11-06T20:48:10.604Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1/projects/dosedaily-app/services/cloudfunctions.googleapis.com:enable [none]
+[debug] [2023-11-06T20:48:10.604Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1/projects/dosedaily-app/services/cloudfunctions.googleapis.com:enable x-goog-quota-user=projects/dosedaily-app
+[debug] [2023-11-06T20:48:10.628Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/dosedaily-app/services/runtimeconfig.googleapis.com 200
+[debug] [2023-11-06T20:48:10.628Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/dosedaily-app/services/runtimeconfig.googleapis.com [omitted]
+[debug] [2023-11-06T20:48:12.042Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1/projects/dosedaily-app/services/cloudfunctions.googleapis.com:enable 200
+[debug] [2023-11-06T20:48:12.042Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1/projects/dosedaily-app/services/cloudfunctions.googleapis.com:enable [omitted]
+[debug] [2023-11-06T20:48:22.055Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/dosedaily-app/services/cloudfunctions.googleapis.com [none]
+[debug] [2023-11-06T20:48:22.055Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/dosedaily-app/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/dosedaily-app
+[debug] [2023-11-06T20:48:23.241Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/dosedaily-app/services/cloudfunctions.googleapis.com 200
+[debug] [2023-11-06T20:48:23.241Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/dosedaily-app/services/cloudfunctions.googleapis.com [omitted]
+[info] Let's create a new codebase for your functions.
+[info] A directory corresponding to the codebase will be created in your project
+[info] with sample code pre-configured.
+
+[info] See https://firebase.google.com/docs/functions/organize-functions for
+[info] more information on organizing your functions using codebases.
+
+[info] Functions can be deployed with firebase deploy.
+
+[info] +  Wrote functions/requirements.txt 
+[info] +  Wrote functions/.gitignore 
+[info] +  Wrote functions/main.py 
+[debug] [2023-11-06T20:48:28.116Z] Running command with virtualenv: command="C:\Users\Pichau\Desktop\pasta TCC\Android Projetos\Tela_Login_Tela_Cadastro\functions\venv\Scripts\activate.bat", args=["","&&","pip3","install","--upgrade","pip"]
+[debug] [2023-11-06T20:48:28.230Z] Error: spawn "C:\Users\Pichau\Desktop\pasta TCC\Android Projetos\Tela_Login_Tela_Cadastro\functions\venv\Scripts\activate.bat" ENOENT
+    at notFoundError (C:\Users\Pichau\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\cross-spawn\lib\enoent.js:6:26)
+    at verifyENOENT (C:\Users\Pichau\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\cross-spawn\lib\enoent.js:40:16)
+    at cp.emit (C:\Users\Pichau\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\cross-spawn\lib\enoent.js:27:25)
+    at ChildProcess._handle.onexit (node:internal/child_process:294:12)
+[error] 
+[error] Error: An unexpected error has occurred.

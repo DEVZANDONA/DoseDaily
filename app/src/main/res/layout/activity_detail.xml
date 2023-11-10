@@ -56,9 +56,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="63dp"
-            android:layout_marginEnd="79dp"
-            android:layout_marginBottom="63dp"
+            android:layout_marginTop="43dp"
+            android:layout_marginEnd="82dp"
             android:background="@drawable/button"
             android:text="Adicionar Notificação"
             android:textSize="18sp"
@@ -78,6 +77,7 @@
             app:menu_icon="@drawable/add_ic"
             app:menu_openDirection="up"
             app:menu_showShadow="true">
+
             <com.github.clans.fab.FloatingActionButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -86,6 +86,7 @@
                 app:fab_showShadow="true"
                 app:fab_colorNormal="@color/green"
                 app:fab_size="mini"/>
+
             <com.github.clans.fab.FloatingActionButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
