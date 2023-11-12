@@ -1,4 +1,4 @@
-package Medicamentos;
+package com.tcc.DoseDaily.System_UI.Database;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -22,9 +22,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.tcc.tela_login_tela_cadastro.R;
+import com.tcc.DoseDaily.Models.Medicines;
+import com.tcc.DoseDaily.R;
 
-public class UploadActivity extends AppCompatActivity {
+public class UploadMedicineActivity extends AppCompatActivity {
     ImageView uploadImage;
     Button saveButton;
     EditText uploadTopic, uploadDesc, uploadLang;
@@ -45,7 +46,7 @@ public class UploadActivity extends AppCompatActivity {
         saveButton = findViewById(R.id.saveButton);
         defaultImage = getResources().getDrawable(R.drawable.medicine);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(UploadActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(UploadMedicineActivity.this);
         builder.setCancelable(false);
         builder.setView(R.layout.progress_layout);
         dialog = builder.create();
@@ -58,7 +59,7 @@ public class UploadActivity extends AppCompatActivity {
                         uri = data.getData();
                         uploadImage.setImageURI(uri);
                     } else {
-                        Toast.makeText(UploadActivity.this, "No Image Selected", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(UploadMedicineActivity.this, "No Image Selected", Toast.LENGTH_SHORT).show();
                     }
                 }
         );
@@ -73,7 +74,7 @@ public class UploadActivity extends AppCompatActivity {
             if (validateFields()) {
                 saveData();
             } else {
-                Toast.makeText(UploadActivity.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UploadMedicineActivity.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -110,18 +111,18 @@ public class UploadActivity extends AppCompatActivity {
                             uploadData(userId);
                         } else {
                             dialog.dismiss();
-                            Toast.makeText(UploadActivity.this, "Erro ao obter URL da imagem: " + uriResult.getException().getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(UploadMedicineActivity.this, "Erro ao obter URL da imagem: " + uriResult.getException().getMessage(), Toast.LENGTH_LONG).show();
                         }
                     });
                 }).addOnFailureListener(e -> {
                     dialog.dismiss();
-                    Toast.makeText(UploadActivity.this, "Erro ao fazer upload da imagem: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(UploadMedicineActivity.this, "Erro ao fazer upload da imagem: " + e.getMessage(), Toast.LENGTH_LONG).show();
                 });
             }
         } else {
             // Se o usuário não estiver autenticado, exibe uma mensagem
             dialog.dismiss();
-            Toast.makeText(UploadActivity.this, "You need to be logged in to perform this action", Toast.LENGTH_SHORT).show();
+            Toast.makeText(UploadMedicineActivity.this, "You need to be logged in to perform this action", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -134,15 +135,15 @@ public class UploadActivity extends AppCompatActivity {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Medicamento").push();
         String uniqueKey = ref.getKey();
 
-        DataClass dataClass = new DataClass(title, desc, lang, imageURL, uniqueKey, userId);
+        Medicines medicines = new Medicines(title, desc, lang, imageURL, uniqueKey, userId);
 
-        ref.setValue(dataClass).addOnCompleteListener(task -> {
+        ref.setValue(medicines).addOnCompleteListener(task -> {
             dialog.dismiss();
             if (task.isSuccessful()){
-                Toast.makeText(UploadActivity.this, "Saved", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UploadMedicineActivity.this, "Saved", Toast.LENGTH_SHORT).show();
                 finish();
             } else {
-                Toast.makeText(UploadActivity.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(UploadMedicineActivity.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -1,4 +1,4 @@
-package com.tcc.tela_login_tela_cadastro;
+package com.tcc.DoseDaily;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.tcc.tela_login_tela_cadastro", appContext.getPackageName());
+        assertEquals("com.tcc.DoseDaily", appContext.getPackageName());
     }
 }

@@ -1,4 +1,4 @@
-package com.tcc.tela_login_tela_cadastro;
+package com.tcc.DoseDaily.Auth;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,11 +23,12 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.tcc.DoseDaily.R;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class FormCadastro extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
 
     private EditText edit_nome,edit_email,edit_senha;
     private Button bt_cadastrar;
@@ -44,7 +45,7 @@ public class FormCadastro extends AppCompatActivity {
         voltarLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(FormCadastro.this, FormLogin.class);
+                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });

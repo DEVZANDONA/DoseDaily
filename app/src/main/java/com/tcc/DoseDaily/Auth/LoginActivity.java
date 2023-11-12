@@ -1,4 +1,4 @@
-package com.tcc.tela_login_tela_cadastro;
+package com.tcc.DoseDaily.Auth;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -16,9 +16,11 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.tcc.DoseDaily.System_UI.HomePage;
+import com.tcc.DoseDaily.R;
 
 
-public class FormLogin extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     private Button button_cadastro;
     private EditText edit_email, edit_senha;
@@ -46,7 +48,7 @@ public class FormLogin extends AppCompatActivity {
                 });
 
         button_cadastro.setOnClickListener(view -> {
-            Intent intent = new Intent(FormLogin.this, FormCadastro.class);
+            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
             startActivity(intent);
         });
 
@@ -77,7 +79,7 @@ public class FormLogin extends AppCompatActivity {
 
     private void TelaPrincipal() {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        Intent intent = new Intent(FormLogin.this, HomePage.class);
+        Intent intent = new Intent(LoginActivity.this, HomePage.class);
         intent.putExtra("userId", userId);
         startActivity(intent);
         finish();

@@ -8,6 +8,35 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:304892996862:android:f78befd51a5c66649109af",
+        "android_client_info": {
+          "package_name": "com.tcc.DoseDaily"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "304892996862-h944quu79luhsd2ut8iorm680fhdg53s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaxyxAXX_dElO9SfPPZvKsW88Lf3zc4pg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "304892996862-h944quu79luhsd2ut8iorm680fhdg53s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:304892996862:android:873d2371953272539109af",
         "android_client_info": {
           "package_name": "com.tcc.tela_login_tela_cadastro"

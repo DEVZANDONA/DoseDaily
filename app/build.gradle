@@ -14,10 +14,10 @@ plugins {
 }
 
 android {
-    namespace 'com.tcc.tela_login_tela_cadastro'
+    namespace 'com.tcc.DoseDaily'
     compileSdk 33
     defaultConfig {
-        applicationId "com.tcc.tela_login_tela_cadastro"
+        applicationId "com.tcc.DoseDaily"
         minSdk 33
         targetSdk 33
         versionCode 1

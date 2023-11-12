@@ -1,4 +1,4 @@
-package Medicamentos;
+package com.tcc.DoseDaily.System_UI;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,17 +18,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.tcc.tela_login_tela_cadastro.FormLogin;
-import com.tcc.tela_login_tela_cadastro.R;
+import com.tcc.DoseDaily.Adapters.MyAdapter;
+import com.tcc.DoseDaily.Auth.LoginActivity;
+import com.tcc.DoseDaily.Models.Medicines;
+import com.tcc.DoseDaily.System_UI.Database.UploadMedicineActivity;
+import com.tcc.DoseDaily.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListaMedicamentos extends AppCompatActivity {
+public class ListMedicinesActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private Query userMedicamentoQuery;
     private ValueEventListener eventListener;
     private RecyclerView recyclerView;
-    private List<DataClass> dataList;
+    private List<Medicines> dataList;
     private MyAdapter adapter;
     private SearchView searchView;
     private String userId;
@@ -43,7 +46,7 @@ public class ListaMedicamentos extends AppCompatActivity {
         FirebaseUser user = auth.getCurrentUser();
         if (user == null) {
             // Se o usuário não estiver autenticado, redirecione-o para a tela de login
-            Intent intent = new Intent(ListaMedicamentos.this, FormLogin.class);
+            Intent intent = new Intent(ListMedicinesActivity.this, LoginActivity.class);
             startActivity(intent);
             finish(); // Encerre esta atividade para que o usuário não possa voltar pressionando o botão "voltar"
             return; // Saia do método para evitar a execução do código restante
@@ -61,14 +64,14 @@ public class ListaMedicamentos extends AppCompatActivity {
         fab = findViewById(R.id.fab);
         searchView = findViewById(R.id.search);
         searchView.clearFocus();
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(ListaMedicamentos.this, 1);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(ListMedicinesActivity.this, 1);
         recyclerView.setLayoutManager(gridLayoutManager);
 
         dataList = new ArrayList<>();
-        adapter = new MyAdapter(ListaMedicamentos.this, dataList);
+        adapter = new MyAdapter(ListMedicinesActivity.this, dataList);
         recyclerView.setAdapter(adapter);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(ListaMedicamentos.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(ListMedicinesActivity.this);
         builder.setCancelable(false);
         builder.setView(R.layout.progress_layout);
         AlertDialog dialog = builder.create();
@@ -82,9 +85,9 @@ public class ListaMedicamentos extends AppCompatActivity {
                 Log.d("ListaMedicamentos", "Número de medicamentos encontrados: " + snapshot.getChildrenCount());
                 dataList.clear();
                 for (DataSnapshot itemSnapshot: snapshot.getChildren()){
-                    DataClass dataClass = itemSnapshot.getValue(DataClass.class);
-                    dataClass.setKey(itemSnapshot.getKey());
-                    dataList.add(dataClass);
+                    Medicines medicines = itemSnapshot.getValue(Medicines.class);
+                    medicines.setKey(itemSnapshot.getKey());
+                    dataList.add(medicines);
                 }
                 adapter.notifyDataSetChanged();
                 dialog.dismiss();
@@ -114,17 +117,17 @@ public class ListaMedicamentos extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ListaMedicamentos.this, UploadActivity.class);
+                Intent intent = new Intent(ListMedicinesActivity.this, UploadMedicineActivity.class);
                 startActivity(intent);
             }
         });
     }
 
     public void searchList(String text){
-        ArrayList<DataClass> searchList = new ArrayList<>();
-        for (DataClass dataClass: dataList){
-            if (dataClass.getDataTitle().toLowerCase().contains(text.toLowerCase())){
-                searchList.add(dataClass);
+        ArrayList<Medicines> searchList = new ArrayList<>();
+        for (Medicines medicines : dataList){
+            if (medicines.getName().toLowerCase().contains(text.toLowerCase())){
+                searchList.add(medicines);
             }
         }
         Log.d("ListaMedicamentos", "Número de medicamentos após a pesquisa: " + searchList.size());

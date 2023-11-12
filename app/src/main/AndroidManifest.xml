@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.tcc.tela_login_tela_cadastro">
+    package="com.tcc.DoseDaily">
     <!-- Permissões do aplicativo -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -25,32 +25,32 @@
         android:theme="@style/Theme.Tela_Login_Tela_Cadastro"
         tools:targetApi="31">
         <activity
-            android:name="Medicamentos.PermissionRequestActivity"
+            android:name=".System_UI.PermissionRequestActivity"
             android:exported="false" />
         <!-- Atividades do seu aplicativo -->
         <activity
-            android:name="Medicamentos.UpdateActivity"
+            android:name=".System_UI.Database.UpdateMedicineActivity"
             android:exported="false" />
         <activity
-            android:name="Medicamentos.DetailActivity"
+            android:name=".System_UI.Database.DetailActivity"
             android:exported="false" />
         <activity
-            android:name="Medicamentos.UploadActivity"
+            android:name=".System_UI.Database.UploadMedicineActivity"
             android:exported="false" />
         <activity
-            android:name="Medicamentos.ListaMedicamentos"
+            android:name=".System_UI.ListMedicinesActivity"
             android:exported="false" />
         <activity
-            android:name="com.tcc.tela_login_tela_cadastro.TelaPerfil"
+            android:name="com.tcc.DoseDaily.System_UI.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name="com.tcc.tela_login_tela_cadastro.HomePage"
+            android:name="com.tcc.DoseDaily.System_UI.HomePage"
             android:exported="false" />
         <activity
-            android:name="com.tcc.tela_login_tela_cadastro.FormCadastro"
+            android:name="com.tcc.DoseDaily.Auth.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name="com.tcc.tela_login_tela_cadastro.FormLogin"
+            android:name="com.tcc.DoseDaily.Auth.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -59,7 +59,7 @@
             </intent-filter>
         </activity> <!-- Configurando o serviço de mensagens do Firebase -->
         <service
-            android:name="Medicamentos.MyFirebaseMessagingService"
+            android:name=".Services.MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

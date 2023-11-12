@@ -1,4 +1,4 @@
-package Medicamentos;
+package com.tcc.DoseDaily.System_UI.Database;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -22,7 +22,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.tcc.tela_login_tela_cadastro.R;
+import com.tcc.DoseDaily.R;
+import com.tcc.DoseDaily.System_UI.ListMedicinesActivity;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -171,7 +172,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void navigateToUpdateActivity() {
-        Intent intent = new Intent(DetailActivity.this, UpdateActivity.class)
+        Intent intent = new Intent(DetailActivity.this, UpdateMedicineActivity.class)
                 .putExtra("Title", detailTitle.getText().toString())
                 .putExtra("Description", detailDesc.getText().toString())
                 .putExtra("Language", detailLang.getText().toString())
@@ -186,7 +187,7 @@ public class DetailActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void unused) {
                         Toast.makeText(DetailActivity.this, "Excluído", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getApplicationContext(), ListaMedicamentos.class));
+                        startActivity(new Intent(getApplicationContext(), ListMedicinesActivity.class));
                         finish();
                     }
                 })

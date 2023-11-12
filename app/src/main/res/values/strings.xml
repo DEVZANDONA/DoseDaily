@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Tela_Login_Tela_Cadastro</string>
+    <string name="app_name">DoseDaily</string>
     <string name="Entrar">Entrar</string>
     <string name="text_cadastro">Crie uma conta!</string>
     <string name="title_cadastro">Cadastre-se</string>

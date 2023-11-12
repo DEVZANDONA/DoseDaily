@@ -1,4 +1,4 @@
-package com.tcc.tela_login_tela_cadastro;
+package com.tcc.DoseDaily.System_UI;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,8 +16,10 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.tcc.DoseDaily.Auth.LoginActivity;
+import com.tcc.DoseDaily.R;
 
-public class TelaPerfil extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity {
 
     private TextView nomeUsuario, emailUsuario;
     private Button bt_deslogar;
@@ -36,7 +38,7 @@ public class TelaPerfil extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(TelaPerfil.this, FormLogin.class);
+                Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -45,7 +47,7 @@ public class TelaPerfil extends AppCompatActivity {
         voltarHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(TelaPerfil.this, HomePage.class);
+                Intent intent = new Intent(ProfileActivity.this, HomePage.class);
                 startActivity(intent);
             }
         });

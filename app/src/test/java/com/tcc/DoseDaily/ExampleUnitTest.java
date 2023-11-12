@@ -1,4 +1,4 @@
-package com.tcc.tela_login_tela_cadastro;
+package com.tcc.DoseDaily;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package Medicamentos;
+package com.tcc.DoseDaily.System_UI;
 
 import android.Manifest;
 import android.app.Activity;

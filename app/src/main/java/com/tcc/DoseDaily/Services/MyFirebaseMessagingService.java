@@ -1,4 +1,4 @@
-package Medicamentos;
+package com.tcc.DoseDaily.Services;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -12,8 +12,8 @@ import androidx.core.app.NotificationCompat;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.tcc.tela_login_tela_cadastro.HomePage;
-import com.tcc.tela_login_tela_cadastro.R;
+import com.tcc.DoseDaily.System_UI.HomePage;
+import com.tcc.DoseDaily.R;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
@@ -30,12 +30,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             String titulo = remoteMessage.getData().get("titulo");
             String corpo = remoteMessage.getData().get("corpo");
 
+            Log.d(TAG, "Título: " + titulo);
+            Log.d(TAG, "Corpo: " + corpo);
+
             showNotification(titulo, corpo);
         }
 
     }
 
     private void showNotification(String title, String message) {
+        Log.d(TAG, "Mostrando notificação. Título: " + title + ", Corpo: " + message);
         Intent intent = new Intent(this, HomePage.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
@@ -55,6 +59,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             notificationManager.createNotificationChannel(channel);
         }
 
-        notificationManager.notify(0, builder.build());
+        notificationManager.notify(1, builder.build());
     }
 }

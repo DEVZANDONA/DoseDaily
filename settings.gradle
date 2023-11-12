@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "Tela_Login_Tela_Cadastro"
+rootProject.name = "DoseDaily"
 include ':app'

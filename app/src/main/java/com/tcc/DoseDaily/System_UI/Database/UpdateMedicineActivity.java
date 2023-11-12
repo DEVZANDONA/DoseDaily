@@ -1,4 +1,4 @@
-package Medicamentos;
+package com.tcc.DoseDaily.System_UI.Database;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.activity.result.ActivityResult;
@@ -30,11 +30,12 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import com.tcc.tela_login_tela_cadastro.R;
+import com.tcc.DoseDaily.Models.Medicines;
+import com.tcc.DoseDaily.R;
 
 import java.util.UUID;
 
-public class UpdateActivity extends AppCompatActivity {
+public class UpdateMedicineActivity extends AppCompatActivity {
 
     ImageView updateImage;
     Button updateButton;
@@ -68,7 +69,7 @@ public class UpdateActivity extends AppCompatActivity {
                             uri = data.getData();
                             updateImage.setImageURI(uri);
                         } else {
-                            Toast.makeText(UpdateActivity.this, "No Image Selected", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(UpdateMedicineActivity.this, "No Image Selected", Toast.LENGTH_SHORT).show();
                             updateImage.setImageResource(R.drawable.medicine);
                         }
                     }
@@ -78,7 +79,7 @@ public class UpdateActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             oldImageURL = bundle.getString("Image");
-            Glide.with(UpdateActivity.this).load(oldImageURL).into(updateImage);
+            Glide.with(UpdateMedicineActivity.this).load(oldImageURL).into(updateImage);
             updateTitle.setText(bundle.getString("Title"));
             updateDesc.setText(bundle.getString("Description"));
             updateLang.setText(bundle.getString("Language"));
@@ -112,7 +113,7 @@ public class UpdateActivity extends AppCompatActivity {
         }
 
         storageReference = FirebaseStorage.getInstance().getReference().child("Medicamento Imagens").child(UUID.randomUUID().toString()); // Nome único para a imagem
-        AlertDialog.Builder builder = new AlertDialog.Builder(UpdateActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(UpdateMedicineActivity.this);
         builder.setCancelable(false);
         builder.setView(R.layout.progress_layout);
         AlertDialog dialog = builder.create();
@@ -130,7 +131,7 @@ public class UpdateActivity extends AppCompatActivity {
                         dialog.dismiss();
                     } else {
                         dialog.dismiss();
-                        Toast.makeText(UpdateActivity.this, "Erro ao obter URL da imagem: " + uriResult.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(UpdateMedicineActivity.this, "Erro ao obter URL da imagem: " + uriResult.getException().getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
             }
@@ -138,7 +139,7 @@ public class UpdateActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
                 dialog.dismiss();
-                Toast.makeText(UpdateActivity.this, "Erro ao fazer upload da imagem: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(UpdateMedicineActivity.this, "Erro ao fazer upload da imagem: " + e.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -152,10 +153,10 @@ public class UpdateActivity extends AppCompatActivity {
         lang = updateLang.getText().toString();
 
         // Criando a instância de DataClass com o userId
-        DataClass dataClass = new DataClass(title, desc, lang, imageUrl, key, userId);
+        Medicines medicines = new Medicines(title, desc, lang, imageUrl, key, userId);
 
         // Salvando os dados no banco de dados
-        databaseReference.setValue(dataClass).addOnCompleteListener(new OnCompleteListener<Void>() {
+        databaseReference.setValue(medicines).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
@@ -165,10 +166,10 @@ public class UpdateActivity extends AppCompatActivity {
                         reference.delete();
                     }
 
-                    Toast.makeText(UpdateActivity.this, "Updated", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UpdateMedicineActivity.this, "Updated", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
-                    Toast.makeText(UpdateActivity.this, "Erro ao atualizar os dados: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UpdateMedicineActivity.this, "Erro ao atualizar os dados: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
