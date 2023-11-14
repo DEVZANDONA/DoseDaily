@@ -43,7 +43,7 @@
             android:layout_marginStart="90dp"
             android:textAlignment="center"
             android:textColor="@color/azul2"
-            android:textSize="16sp"/>
+            android:textSize="14sp"/>
         <TextView
             android:layout_width="140dp"
             android:layout_height="wrap_content"

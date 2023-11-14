@@ -25,9 +25,11 @@
         android:theme="@style/Theme.Tela_Login_Tela_Cadastro"
         tools:targetApi="31">
         <activity
-            android:name=".System_UI.PermissionRequestActivity"
+            android:name=".System_UI.RemindersActivity"
             android:exported="false" />
-        <!-- Atividades do seu aplicativo -->
+        <activity
+            android:name=".System_UI.PermissionRequestActivity"
+            android:exported="false" /> <!-- Atividades do seu aplicativo -->
         <activity
             android:name=".System_UI.Database.UpdateMedicineActivity"
             android:exported="false" />
@@ -41,16 +43,16 @@
             android:name=".System_UI.ListMedicinesActivity"
             android:exported="false" />
         <activity
-            android:name="com.tcc.DoseDaily.System_UI.ProfileActivity"
+            android:name=".System_UI.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name="com.tcc.DoseDaily.System_UI.HomePage"
+            android:name=".System_UI.HomePage"
             android:exported="false" />
         <activity
-            android:name="com.tcc.DoseDaily.Auth.RegisterActivity"
+            android:name=".Auth.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name="com.tcc.DoseDaily.Auth.LoginActivity"
+            android:name=".Auth.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

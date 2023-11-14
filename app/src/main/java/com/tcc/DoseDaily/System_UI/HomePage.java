@@ -16,7 +16,7 @@ public class HomePage extends AppCompatActivity {
     private CardView cardPerfil;
     private CardView cardMedicamentos;
     private CardView cardNoticias;
-    private CardView cardMusicas;
+    private CardView cardReminders;
     private String userId;
 
     @Override
@@ -55,13 +55,22 @@ public class HomePage extends AppCompatActivity {
             }
         });
 
-        // Adicione listeners para outros CardViews conforme necessário
+        cardReminders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomePage.this, RemindersActivity.class);
+                intent.putExtra("userId", userId); // Passe o ID do usuário para a lista de medicamentos
+                startActivity(intent);
+            }
+        });
+
+
     }
 
     public void IniciarComponentes() {
         cardPerfil = findViewById(R.id.card_videos);
         cardMedicamentos = findViewById(R.id.card_investimentos);
         cardNoticias = findViewById(R.id.card_noticias);
-        cardMusicas = findViewById(R.id.card_musicas);
+        cardReminders = findViewById(R.id.card_musicas);
     }
 }
