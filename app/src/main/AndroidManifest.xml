@@ -49,8 +49,12 @@
             android:name=".System_UI.HomePage"
             android:exported="false" />
         <activity
+            android:name=".System_UI.HistoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".Auth.RegisterActivity"
             android:exported="false" />
+
         <activity
             android:name=".Auth.LoginActivity"
             android:exported="true">

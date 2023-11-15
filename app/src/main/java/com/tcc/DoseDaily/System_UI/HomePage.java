@@ -15,7 +15,7 @@ public class HomePage extends AppCompatActivity {
 
     private CardView cardPerfil;
     private CardView cardMedicamentos;
-    private CardView cardNoticias;
+    private CardView cardHistorico;
     private CardView cardReminders;
     private String userId;
 
@@ -64,13 +64,20 @@ public class HomePage extends AppCompatActivity {
             }
         });
 
+        cardHistorico.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent historyIntent = new Intent(HomePage.this, HistoryActivity.class);
+                startActivity(historyIntent);
+            }
+        });
 
     }
 
     public void IniciarComponentes() {
         cardPerfil = findViewById(R.id.card_videos);
         cardMedicamentos = findViewById(R.id.card_investimentos);
-        cardNoticias = findViewById(R.id.card_noticias);
+        cardHistorico = findViewById(R.id.card_noticias);
         cardReminders = findViewById(R.id.card_musicas);
     }
 }

@@ -1,0 +1,14 @@
+<!-- res/drawable/circle_background.xml -->
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:shape="oval"
+    tools:ignore="ExtraText">
+
+    <solid android:color="@android:color/holo_blue_light" /> <!-- Cor de fundo do círculo -->
+    <size
+        android:width="56dp"
+    android:height="56dp"
+    />
+
+</shape>

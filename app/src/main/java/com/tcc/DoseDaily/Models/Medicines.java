@@ -3,6 +3,8 @@ package com.tcc.DoseDaily.Models;
 public class Medicines {
 
     private String name;
+
+    private String frequencia;
     private String description;
     private String dosage;
     private String dataImage;
@@ -23,7 +25,7 @@ public class Medicines {
         this.userId = userId;
     }
 
-    public Medicines(String name, String description, String dosage, String dataImage, String horaNotificacao, String dataNotificacao, String key, String userId) {
+    public Medicines(String name, String description, String dosage, String dataImage, String horaNotificacao, String dataNotificacao, String key, String userId, String frequencia) {
         this.name = name;
         this.description = description;
         this.dosage = dosage;
@@ -32,7 +34,10 @@ public class Medicines {
         this.dataNotificacao = dataNotificacao;
         this.key = key;
         this.userId = userId;
+        this.frequencia = frequencia;
     }
+
+
 
 
     // Getters e Setters
@@ -101,4 +106,11 @@ public class Medicines {
         this.dataNotificacao = dataNotificacao;
     }
 
+    public String getFrequencia() {
+        return frequencia;
+    }
+
+    public void setFrequencia(String frequencia) {
+        this.frequencia = frequencia;
+    }
 }
