@@ -6,15 +6,17 @@ public class HistoryItem implements HistoricAdapter.Item {
     private String medicationName;
     private String consumptionTime;
     private int consumptionDay;
+    private String diaDaSemana; // Novo campo adicionado
 
-    public HistoryItem(){
-
+    public HistoryItem() {
+        // Construtor vazio necessário para Firebase
     }
 
-    public HistoryItem(String medicationName, String consumptionTime, int consumptionDay) {
+    public HistoryItem(String medicationName, String consumptionTime, int consumptionDay, String diaDaSemana) {
         this.medicationName = medicationName;
         this.consumptionTime = consumptionTime;
         this.consumptionDay = consumptionDay;
+        this.diaDaSemana = diaDaSemana;
     }
 
     public String getMedicationName() {
@@ -39,6 +41,14 @@ public class HistoryItem implements HistoricAdapter.Item {
 
     public void setConsumptionDay(int consumptionDay) {
         this.consumptionDay = consumptionDay;
+    }
+
+    public String getDiaDaSemana() {
+        return diaDaSemana;
+    }
+
+    public void setDiaDaSemana(String diaDaSemana) {
+        this.diaDaSemana = diaDaSemana;
     }
 
     @Override

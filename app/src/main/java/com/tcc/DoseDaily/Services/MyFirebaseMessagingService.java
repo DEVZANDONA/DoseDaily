@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.Log;
 
@@ -19,6 +20,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "MyFirebaseMessagingServ";
     private static final String CHANNEL_ID = "channel_id";
+    private static final String SWITCH_STATE_PREF = "switch_state_pref";
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -33,9 +35,22 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Log.d(TAG, "Título: " + titulo);
             Log.d(TAG, "Corpo: " + corpo);
 
-            showNotification(titulo, corpo);
-        }
+            // Obtém o estado atual do switch
+            boolean isSwitchOn = getSwitchState();
 
+            // Se o switch estiver ligado, mostra a notificação
+            if (isSwitchOn) {
+                showNotification(titulo, corpo);
+            } else {
+                Log.d(TAG, "Switch desligado. Não mostrando notificação.");
+            }
+        }
+    }
+
+    private boolean getSwitchState() {
+        SharedPreferences preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        // Obtém o estado atual do switch, o valor padrão é true (ligado)
+        return preferences.getBoolean(SWITCH_STATE_PREF, true);
     }
 
     private void showNotification(String title, String message) {
@@ -54,7 +69,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID,"Default Channel", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "Default Channel", NotificationManager.IMPORTANCE_DEFAULT);
             channel.setImportance(NotificationManager.IMPORTANCE_HIGH);
             notificationManager.createNotificationChannel(channel);
         }

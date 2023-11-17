@@ -13,10 +13,10 @@
         android:id="@+id/scrollView2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="1dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
         android:background="#f2f1f6"
         android:padding="0sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -71,44 +71,40 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout6"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="32dp"
-                    android:background="@drawable/background_oval1"
-                    app:layout_constraintBottom_toTopOf="@+id/imageView3"
-                    app:layout_constraintEnd_toStartOf="@+id/textView"
-                    app:layout_constraintHorizontal_bias="0.136"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0">
-
-                    <ImageView
-                        android:id="@+id/imageView4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.529"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.514"
-                        app:srcCompat="@drawable/back" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/nome_user"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textAlignment="center"
-                android:textSize="35dp"
-                android:textStyle="bold" />
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/nome_user"
+                    android:layout_width="25dp"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textAlignment="center"
+                    android:textSize="30dp"
+                    android:textStyle="bold"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="8dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@+id/icon_edit"
+                    android:layout_toLeftOf="@+id/icon_edit" />
+
+                <ImageView
+                    android:id="@+id/icon_edit"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="11dp"
+                    android:layout_marginBottom="0dp"
+                    android:src="@drawable/baseline_edit_24" />
+
+            </RelativeLayout>
+
+
 
             <TextView
                 android:id="@+id/email_user"
@@ -137,7 +133,7 @@
                     app:srcCompat="@drawable/edit" />
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/textView10"
+                    android:id="@+id/edit_dados"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Editar Dados"
@@ -204,25 +200,28 @@
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/notificacaotext"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
+                    android:paddingLeft="25dp"
                     android:text="Notifique-me"
                     android:textColor="@color/azul1"
                     android:textSize="25dp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/notificacaoimagem"
+                    app:layout_constraintEnd_toStartOf="@+id/switch2"
+                    app:layout_constraintHorizontal_bias="0.649"
                     app:layout_constraintStart_toStartOf="@+id/guideline5"
-                    app:layout_constraintTop_toTopOf="@+id/notificacao" />
+                    app:layout_constraintTop_toTopOf="@+id/notificacao"
+                    app:layout_constraintVertical_bias="1.0" />
 
-                <ImageView
-                    android:id="@+id/notificacaoimagem"
-                    android:layout_width="25dp"
-                    android:layout_height="20dp"
+                <Switch
+                    android:id="@+id/switch2"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_marginEnd="32dp"
+                    android:minHeight="48dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/notificacao"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/arrow" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -277,6 +276,59 @@
                     app:layout_constraintEnd_toStartOf="@+id/notificacaoimagem4"
                     app:layout_constraintStart_toStartOf="@+id/guideline6"
                     app:layout_constraintTop_toTopOf="@+id/logout" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                android:paddingTop="20dp">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintGuide_begin="40dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/excluirConta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:paddingLeft="25dp"
+                    android:scaleType="fitStart"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/deletee" />
+
+                <TextView
+                    android:id="@+id/excluirContaText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Excluir a Conta"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/excluirContaImagem"
+                    app:layout_constraintStart_toStartOf="@+id/guideline7"
+                    app:layout_constraintTop_toTopOf="@+id/excluirConta" />
+
+                <ImageView
+                    android:id="@+id/excluirContaImagem"
+                    android:layout_width="25dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="32dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/excluirConta"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/arrow" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

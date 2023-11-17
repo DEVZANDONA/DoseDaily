@@ -24,11 +24,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.tcc.DoseDaily.Models.HistoryItem;
 import com.tcc.DoseDaily.R;
 import com.tcc.DoseDaily.System_UI.HistoryActivity;
 import com.tcc.DoseDaily.System_UI.ListMedicinesActivity;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -210,17 +213,19 @@ public class DetailActivity extends AppCompatActivity {
                 // Obter o título do medicamento
                 String tituloMedicamento = detailTitle.getText().toString();
 
-                // Criar um objeto para os dados do histórico
-                Map<String, Object> historicoData = new HashMap<>();
-                historicoData.put("medicationName", tituloMedicamento);
-                historicoData.put("consumptionTime", horaFormatada);
-                historicoData.put("consumptionDay", diaAtual);
+                // Obter o dia da semana atual
+                SimpleDateFormat sdf = new SimpleDateFormat("EEEE", Locale.getDefault());
+                Date dataAtual = calendar.getTime();
+                String diaSemana = sdf.format(dataAtual);
+
+                // Criar uma instância de HistoryItem
+                HistoryItem historyItem = new HistoryItem(tituloMedicamento, horaFormatada, diaAtual, diaSemana);
 
                 // Obter uma referência ao nó "Histórico" no RealTimeDatabase
                 DatabaseReference historicoReference = FirebaseDatabase.getInstance().getReference("Histórico");
 
                 // Adicionar os dados do histórico ao nó "Histórico"
-                historicoReference.push().setValue(historicoData)
+                historicoReference.push().setValue(historyItem)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
@@ -242,10 +247,9 @@ public class DetailActivity extends AppCompatActivity {
                 startActivity(historyIntent);
             }
         });
-
     }
 
-    private void navigateToUpdateActivity() {
+        private void navigateToUpdateActivity() {
         Intent intent = new Intent(DetailActivity.this, UpdateMedicineActivity.class)
                 .putExtra("Title", detailTitle.getText().toString())
                 .putExtra("Description", detailDesc.getText().toString())

@@ -13,6 +13,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.tcc.DoseDaily.Adapters.DayDividerItemDecoration;
 import com.tcc.DoseDaily.Adapters.HistoricAdapter;
 import com.tcc.DoseDaily.Models.HistoryItem;
 import com.tcc.DoseDaily.R;
@@ -38,6 +39,10 @@ public class HistoryActivity extends AppCompatActivity {
 
         // Configurar o RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Adicionar o ItemDecoration para adicionar divisores entre as seções
+        recyclerView.addItemDecoration(new DayDividerItemDecoration(this, getResources().getDimensionPixelSize(R.dimen.divider_height)));
+
         historicAdapter = new HistoricAdapter(itemList);
         recyclerView.setAdapter(historicAdapter);
 
@@ -52,26 +57,31 @@ public class HistoryActivity extends AppCompatActivity {
     }
 
     private void loadHistoryData() {
-        // Adicionar um listener para escutar as alterações no nó "Histórico"
         historicoReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 itemList.clear(); // Limpar a lista para evitar duplicatas
 
-                // Iterar sobre os registros do histórico
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    HistoryItem historyItem = snapshot.getValue(HistoryItem.class);
+                // Adicionar todas as divisões com os dias da semana
+                String[] daysOfWeek = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
-                    if (historyItem != null) {
-                        // Criar um objeto ContentItem
-                        HistoricAdapter.ContentItem contentItem = new HistoricAdapter.ContentItem(historyItem);
+                for (String dayOfWeek : daysOfWeek) {
+                    itemList.add(new HistoricAdapter.SectionItem(dayOfWeek));
 
-                        // Adicionar os itens à lista
-                        itemList.add(contentItem);
+                    // Adicionar os itens correspondentes a cada divisão
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        HistoryItem historyItem = snapshot.getValue(HistoryItem.class);
+
+                        if (historyItem != null && historyItem.getDiaDaSemana().equals(dayOfWeek)) {
+                            // Criar um objeto ContentItem
+                            HistoricAdapter.ContentItem contentItem = new HistoricAdapter.ContentItem(historyItem);
+
+                            // Adicionar o item à lista
+                            itemList.add(contentItem);
+                        }
                     }
                 }
 
-                // Notificar o adapter sobre as alterações nos dados
                 historicAdapter.notifyDataSetChanged();
             }
 
@@ -82,12 +92,13 @@ public class HistoryActivity extends AppCompatActivity {
         });
     }
 
+
     private void clearHistory() {
         // Remover todos os registros do nó "Histórico"
         historicoReference.removeValue()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        itemList.clear(); // Limpar a lista localmente
+                        itemList.clear();
                         historicAdapter.notifyDataSetChanged();
                     }
                 });

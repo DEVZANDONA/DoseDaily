@@ -32,7 +32,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     private EditText edit_nome,edit_email,edit_senha;
     private Button bt_cadastrar;
-    private ConstraintLayout voltarLogin;
     String[] mensagens = {"Preencha todos os campos","Cadastro Realizado com Sucesso!"};
     String usuarioId;
 
@@ -41,14 +40,6 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_cadastro);
         IniciarComponentes();
-
-        voltarLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                startActivity(intent);
-            }
-        });
 
         bt_cadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +67,6 @@ public class RegisterActivity extends AppCompatActivity {
         edit_email = findViewById(R.id.edit_email);
         edit_senha = findViewById(R.id.edit_senha);
         bt_cadastrar = findViewById(R.id.bt_cadastrar);
-        voltarLogin = findViewById(R.id.voltarLogin);
     }
 
     private void SalvarDadosUsuario() {

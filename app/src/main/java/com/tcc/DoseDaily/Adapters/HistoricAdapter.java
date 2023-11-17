@@ -1,5 +1,7 @@
 package com.tcc.DoseDaily.Adapters;
 
+import android.graphics.Typeface;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -109,6 +111,8 @@ public class HistoricAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         public SectionViewHolder(@NonNull View itemView) {
             super(itemView);
             sectionTextView = itemView.findViewById(R.id.sectionTextView);
+            sectionTextView.setTypeface(null, Typeface.BOLD);
+            sectionTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
         }
 
         public void bind(SectionItem sectionItem) {
