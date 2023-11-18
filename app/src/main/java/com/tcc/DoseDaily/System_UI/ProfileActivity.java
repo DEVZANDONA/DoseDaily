@@ -25,6 +25,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -143,11 +144,12 @@ public class ProfileActivity extends AppCompatActivity {
                 switch (which) {
                     case 0:
                         // Usuário escolheu editar o EMAIL
-                        // Adicione a lógica para editar o email aqui
+                        // Chama o diálogo de edição de e-mail
+                        openEditEmailDialog();
                         break;
                     case 1:
                         // Usuário escolheu editar a SENHA
-                        // Adicione a lógica para editar a senha aqui
+                        openEditPasswordDialog();
                         break;
                 }
             }
@@ -155,6 +157,108 @@ public class ProfileActivity extends AppCompatActivity {
 
         builder.create().show();
     }
+
+    private void openEditEmailDialog() {
+        // Cria o AlertDialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        // Infla o layout personalizado
+        View view = getLayoutInflater().inflate(R.layout.custom_edit_dialog_email, null);
+        builder.setView(view);
+
+        // Obtenha a referência para os componentes do layout personalizado
+        EditText editEmail = view.findViewById(R.id.edit_email);
+        Button salvarEmailButton = view.findViewById(R.id.salvar_email_button);
+
+        // Adicione um listener ao botão Salvar
+        salvarEmailButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Aqui você pode obter o novo e-mail e fazer as alterações necessárias
+                String novoEmail = editEmail.getText().toString().trim();
+
+                if (!novoEmail.isEmpty()) {
+                    FirebaseAuth.getInstance().getCurrentUser().updateEmail(novoEmail)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        // Se a atualização do e-mail for bem-sucedida, você pode realizar
+                                        // outras operações necessárias, se houver, e exibir uma mensagem
+                                        Toast.makeText(ProfileActivity.this, "E-mail atualizado com sucesso", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        // Se houver um problema ao atualizar o e-mail
+                                        Toast.makeText(ProfileActivity.this, "Erro ao atualizar e-mail", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                    builder.create().dismiss();
+                } else {
+                    Toast.makeText(ProfileActivity.this, "Digite um novo e-mail", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        // Cria e exibe o diálogo
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void openEditPasswordDialog() {
+        // Cria o AlertDialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        // Infla o layout personalizado
+        View view = getLayoutInflater().inflate(R.layout.custom_edit_dialog_senha, null);
+        builder.setView(view);
+
+        // Obtenha a referência para os componentes do layout personalizado
+        EditText editSenha = view.findViewById(R.id.edit_senha);
+        EditText editConfirmacao = view.findViewById(R.id.edit_confirmacao);
+        AppCompatButton salvarSenhaButton = view.findViewById(R.id.salvar_senha_button);
+
+        // Adicione um listener ao botão Salvar
+        salvarSenhaButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Aqui você pode obter a nova senha e confirmação e fazer as alterações necessárias
+                String novaSenha = editSenha.getText().toString().trim();
+                String confirmacaoSenha = editConfirmacao.getText().toString().trim();
+
+                if (!novaSenha.isEmpty() && !confirmacaoSenha.isEmpty()) {
+                    // Verifique se as senhas coincidem
+                    if (novaSenha.equals(confirmacaoSenha)) {
+                        // Adicione a lógica para modificar a senha no Firebase Authentication aqui
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        if (user != null) {
+                            user.updatePassword(novaSenha)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Toast.makeText(ProfileActivity.this, "Senha atualizada com sucesso", Toast.LENGTH_SHORT).show();
+                                                // Faça outras operações ou lógicas, se necessário
+                                            } else {
+                                                Toast.makeText(ProfileActivity.this, "Erro ao atualizar senha", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+                        }
+                        // Depois de fazer as alterações necessárias, você pode fechar o diálogo
+                        builder.create().dismiss();
+                    } else {
+                        Toast.makeText(ProfileActivity.this, "As senhas não coincidem", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(ProfileActivity.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        // Cria e exibe o diálogo
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+
 
     private void atualizarNomeUsuario(String novoNome) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();

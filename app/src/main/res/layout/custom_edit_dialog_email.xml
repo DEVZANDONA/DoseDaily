@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:text="Editar Email do Usuário"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/edit_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:hint="Insira o novo Email:"
+        android:inputType="textEmailAddress"
+        android:minHeight="48dp" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/salvar_email_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/azul2"
+        android:text="Salvar"
+        android:textColor="#263238" />
+</LinearLayout>
