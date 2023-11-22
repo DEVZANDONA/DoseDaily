@@ -2,15 +2,19 @@ package com.tcc.DoseDaily.System_UI;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -34,7 +38,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.tcc.DoseDaily.Auth.LoginActivity;
 import com.tcc.DoseDaily.R;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity  {
 
     private TextView nomeUsuario, emailUsuario;
     private Button bt_deslogar;
@@ -50,6 +54,8 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tela_perfil);
 
         IniciarComponentes();
+
+
 
         ImageView iconEdit = findViewById(R.id.icon_edit);
         iconEdit.setOnClickListener(new View.OnClickListener() {
@@ -100,6 +106,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private void openEditDialog() {
         // Cria o AlertDialog
@@ -379,5 +386,4 @@ public class ProfileActivity extends AppCompatActivity {
                     }
                 });
     }
-
 }

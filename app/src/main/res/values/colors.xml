@@ -5,6 +5,9 @@
     <color name="azul2"> #6998F5</color>
     <color name="azul3">#566075</color>
     <color name="azul4">#5378C1</color>
+    <color name="colorPrimary">#324975</color>
+    <color name="colorAccent">#324975</color>
+    <color name="colorPrimaryDark">#324975</color>
 
     <color name="cor_top">#00DAD2</color>
     <color name="cor_bottom">#002AFF</color>
@@ -23,5 +26,6 @@
     <color name="lavender">#8692f7</color>
     <color name="red">#c70000</color>
     <color name="green">#00ff00</color>
+
 
 </resources>

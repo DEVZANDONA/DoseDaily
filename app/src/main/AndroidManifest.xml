@@ -25,6 +25,14 @@
         android:theme="@style/Theme.Tela_Login_Tela_Cadastro"
         tools:targetApi="31">
         <activity
+            android:name=".System_UI.BaseActivity"
+            android:exported="false"
+            android:label="@string/title_activity_base"
+            android:theme="@style/Theme.Tela_Login_Tela_Cadastro" />
+        <activity
+            android:name=".System_UI.SideBar"
+            android:exported="false" />
+        <activity
             android:name=".System_UI.RemindersActivity"
             android:exported="false" />
         <activity
