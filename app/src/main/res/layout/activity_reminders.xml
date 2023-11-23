@@ -1,24 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+
+<androidx.drawerlayout.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout3"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:openDrawer="start">
+
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".System_UI.RemindersActivity">
+
+    <ImageView
+        android:id="@+id/side_ic"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        app:srcCompat="@drawable/ic_three_dots" />
+
     <androidx.appcompat.widget.SearchView
+        android:id="@+id/search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
-        android:id="@+id/search"
         app:iconifiedByDefault="false"
         app:searchHintIcon="@null"
         app:queryHint="Search..."
         android:focusable="false"
         app:closeIcon="@drawable/lupa_icon"
         app:searchIcon="@drawable/lupa_icon"
+        android:layout_toEndOf="@id/side_ic"
         android:background="@drawable/lavender_border"/>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -31,3 +48,14 @@
         android:visibility="visible" />
 
 </RelativeLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/nav_view3"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/nav_menu"
+        app:itemIconTint="@color/lavender"
+        app:itemTextColor="@color/lavender"/>
+    </androidx.drawerlayout.widget.DrawerLayout>

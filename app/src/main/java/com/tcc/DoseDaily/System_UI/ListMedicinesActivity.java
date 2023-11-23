@@ -4,13 +4,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -36,6 +41,11 @@ public class ListMedicinesActivity extends AppCompatActivity {
     private SearchView searchView;
     private String userId;
 
+    private DrawerLayout drawerLayout;
+    private SideBar sideBar;
+    private NavigationView navigationView;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +61,23 @@ public class ListMedicinesActivity extends AppCompatActivity {
             finish(); // Encerre esta atividade para que o usuário não possa voltar pressionando o botão "voltar"
             return; // Saia do método para evitar a execução do código restante
         }
+
+        drawerLayout = findViewById(R.id.drawer_layout2);
+        navigationView = findViewById(R.id.nav_view2);
+
+        // Inicialize a SideBar
+        sideBar = new SideBar();
+        sideBar.setupDrawer(this, drawerLayout, navigationView, userId);
+
+        // Configuração do clique no ícone lateral (side_ic)
+        ImageView sideIcon = findViewById(R.id.side_ic);
+        sideIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Abra a SideBar quando o ícone for clicado
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
 
         // Obtenha o ID do usuário atual usando Firebase Authentication
         userId = user.getUid();

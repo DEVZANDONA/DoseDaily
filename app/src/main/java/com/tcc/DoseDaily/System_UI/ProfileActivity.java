@@ -28,6 +28,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -46,6 +47,12 @@ public class ProfileActivity extends AppCompatActivity  {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String usuarioID;
     private Switch switchNotificacao;
+
+    private String userId;
+
+    private DrawerLayout drawerLayout;
+    private SideBar sideBar;
+    private NavigationView navigationView;
     private static final String SWITCH_STATE_PREF = "switch_state_pref";
 
     @Override
@@ -55,7 +62,24 @@ public class ProfileActivity extends AppCompatActivity  {
 
         IniciarComponentes();
 
+        // Verifica se o usuário está autenticado
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        userId = user.getUid();
 
+        // Inicialize a SideBar
+        sideBar = new SideBar();
+        sideBar.setupDrawer(this, drawerLayout, navigationView, userId);
+
+        // Configuração do clique no ícone lateral (side_ic)
+        ImageView sideIcon = findViewById(R.id.side_ic);
+        sideIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Abra a SideBar quando o ícone for clicado
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
 
         ImageView iconEdit = findViewById(R.id.icon_edit);
         iconEdit.setOnClickListener(new View.OnClickListener() {
@@ -328,7 +352,9 @@ public class ProfileActivity extends AppCompatActivity  {
         nomeUsuario = findViewById(R.id.nome_user);
         emailUsuario = findViewById(R.id.email_user);
         bt_deslogar = findViewById(R.id.deslogar);
-        excluirConta = findViewById(R.id.excluirContaText); // Adicione esta linha para inicializar o ImageView
+        drawerLayout = findViewById(R.id.drawer_layout4);
+        navigationView = findViewById(R.id.nav_view4);
+        excluirConta = findViewById(R.id.excluirContaText);
     }
 
     // Adicione este método para exibir o diálogo de confirmação

@@ -33,7 +33,7 @@ public class SideBar {
                     startNewActivity(context, HistoryActivity.class, userId);
                     return true;
                 } else if (itemId == R.id.nav_home) {
-                    // Lógica para a tela inicial
+                    startNewActivity(context, HomePage.class, userId);
                     return true;
                 } else if (itemId == R.id.nav_logout) {
                     FirebaseAuth.getInstance().signOut();

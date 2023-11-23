@@ -1,13 +1,20 @@
 package com.tcc.DoseDaily.System_UI;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,10 +35,38 @@ public class HistoryActivity extends AppCompatActivity {
     private List<HistoricAdapter.Item> itemList;
     private DatabaseReference historicoReference;
 
+    private DrawerLayout drawerLayout;
+    private SideBar sideBar;
+
+    String userId;
+    private NavigationView navigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
+
+        drawerLayout = findViewById(R.id.drawer_layout5);
+        navigationView = findViewById(R.id.nav_view5);
+
+        // Verifica se o usuário está autenticado
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        userId = user.getUid();
+
+        // Inicialize a SideBar
+        sideBar = new SideBar();
+        sideBar.setupDrawer(this, drawerLayout, navigationView, userId);
+
+        // Configuração do clique no ícone lateral (side_ic)
+        ImageView sideIcon = findViewById(R.id.side_ic);
+        sideIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Abra a SideBar quando o ícone for clicado
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
 
         itemList = new ArrayList<>();
         recyclerView = findViewById(R.id.recyclerView);

@@ -5,7 +5,9 @@ import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -14,9 +16,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,6 +46,11 @@ public class RemindersActivity extends AppCompatActivity {
     private List<Notifications> filteredList;
     private NotificationsAdapter adapter;
 
+    private String userId;
+    private DrawerLayout drawerLayout;
+    private SideBar sideBar;
+    private NavigationView navigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +61,28 @@ public class RemindersActivity extends AppCompatActivity {
 
         notificationsList = new ArrayList<>();
         filteredList = new ArrayList<>();
+
+        drawerLayout = findViewById(R.id.drawer_layout3);
+        navigationView = findViewById(R.id.nav_view3);
+
+        // Verifica se o usuário está autenticado
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        userId = user.getUid();
+
+        // Inicialize a SideBar
+        sideBar = new SideBar();
+        sideBar.setupDrawer(this, drawerLayout, navigationView, userId);
+
+        // Configuração do clique no ícone lateral (side_ic)
+        ImageView sideIcon = findViewById(R.id.side_ic);
+        sideIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Abra a SideBar quando o ícone for clicado
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Medicamento");
 
