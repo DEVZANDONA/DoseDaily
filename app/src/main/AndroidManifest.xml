@@ -25,6 +25,9 @@
         android:theme="@style/Theme.Tela_Login_Tela_Cadastro"
         tools:targetApi="31">
         <activity
+            android:name=".System_UI.ListInteractionsActivity"
+            android:exported="false" />
+        <activity
             android:name=".System_UI.BaseActivity"
             android:exported="false"
             android:label="@string/title_activity_base"

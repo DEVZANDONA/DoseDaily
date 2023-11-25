@@ -22,6 +22,8 @@ public class HomePage extends AppCompatActivity {
     private CardView cardMedicamentos;
     private CardView cardHistorico;
     private CardView cardReminders;
+
+    private CardView cardInteractions;
     private String userId;
     private DrawerLayout drawerLayout;
     private SideBar sideBar;
@@ -43,16 +45,13 @@ public class HomePage extends AppCompatActivity {
             finish();
         }
 
-        // Inicialize a SideBar
         sideBar = new SideBar();
         sideBar.setupDrawer(this, drawerLayout, navigationView, userId);
 
-        // Configuração do clique no ícone lateral (side_ic)
         ImageView sideIcon = findViewById(R.id.side_ic);
         sideIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Abra a SideBar quando o ícone for clicado
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
@@ -90,12 +89,23 @@ public class HomePage extends AppCompatActivity {
                 startActivity(historyIntent);
             }
         });
+
+        cardInteractions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent historyIntent = new Intent(HomePage.this, ListInteractionsActivity.class);
+                startActivity(historyIntent);
+            }
+        });
     }
+
+
 
     public void IniciarComponentes() {
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         cardPerfil = findViewById(R.id.card_videos);
+        cardInteractions = findViewById(R.id.card_interacoes);
         cardMedicamentos = findViewById(R.id.card_investimentos);
         cardHistorico = findViewById(R.id.card_noticias);
         cardReminders = findViewById(R.id.card_musicas);
