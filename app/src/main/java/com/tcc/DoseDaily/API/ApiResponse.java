@@ -1,7 +1,6 @@
 package com.tcc.DoseDaily.API;
 
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 public class ApiResponse<T> {
@@ -16,7 +15,7 @@ public class ApiResponse<T> {
     private String previous;
 
     @SerializedName("results")
-    private List<T> results;
+    private T results;  // Remova a anotação SerializedName para "results"
 
     public int getCount() {
         return count;
@@ -30,7 +29,7 @@ public class ApiResponse<T> {
         return previous;
     }
 
-    public List<T> getResults() {
+    public T getResults() {
         return results;
     }
 }

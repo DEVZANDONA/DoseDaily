@@ -38,7 +38,6 @@ import java.util.Map;
 
 
 public class DetailActivity extends AppCompatActivity {
-    ImageView detailImage;
     FloatingActionButton editButton, deleteButton;
     TextView detailDesc, detailTitle, detailLang;
     String imageUrl, key, medicamentoId;

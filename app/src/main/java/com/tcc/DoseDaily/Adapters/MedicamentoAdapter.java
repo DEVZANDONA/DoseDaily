@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tcc.DoseDaily.API.Medicamento;
@@ -14,14 +15,17 @@ import com.tcc.DoseDaily.R;
 import java.util.List;
 
 public class MedicamentoAdapter extends RecyclerView.Adapter<MedicamentoAdapter.ViewHolder> {
-    private List<List<Medicamento>> medicamentos;
+    private List<Medicamento> medicamentos;
+    private OnItemClickListener onItemClickListener;
 
-    public MedicamentoAdapter(List<List<Medicamento>> medicamentos) {
+    public MedicamentoAdapter(List<Medicamento> medicamentos, OnItemClickListener onItemClickListener) {
         this.medicamentos = medicamentos;
+        this.onItemClickListener = onItemClickListener;
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View medicamentoView = inflater.inflate(R.layout.item_medicamento, parent, false);
@@ -29,11 +33,15 @@ public class MedicamentoAdapter extends RecyclerView.Adapter<MedicamentoAdapter.
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        Medicamento medicamento = (Medicamento) medicamentos.get(position);
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Medicamento medicamento = medicamentos.get(position);
 
         holder.nomeTextView.setText(medicamento.getNome());
-        // Adicione outros campos conforme necessário
+        holder.itemView.setOnClickListener(v -> {
+            if (onItemClickListener != null) {
+                onItemClickListener.onItemClick(medicamento);
+            }
+        });
     }
 
     @Override
@@ -43,12 +51,14 @@ public class MedicamentoAdapter extends RecyclerView.Adapter<MedicamentoAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView nomeTextView;
-        // Adicione outros TextViews conforme necessário
 
         public ViewHolder(View itemView) {
             super(itemView);
             nomeTextView = itemView.findViewById(R.id.recTitle);
-            // Inicialize outros TextViews conforme necessário
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(Medicamento medicamento);
     }
 }
