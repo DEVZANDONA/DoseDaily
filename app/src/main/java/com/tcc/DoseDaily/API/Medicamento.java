@@ -1,6 +1,7 @@
 package com.tcc.DoseDaily.API;
 
 import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class Medicamento {
@@ -18,7 +19,7 @@ public class Medicamento {
     private List<String> principiosAtivosAnvisa;
 
     @SerializedName("principios_ativos")
-    private List<PrincipioAtivo> principiosAtivos;
+    private List<Interacao.PrincipioAtivo> principiosAtivos;
 
     // Construtores, getters e setters conforme necessário
 
@@ -54,13 +55,11 @@ public class Medicamento {
         this.principiosAtivosAnvisa = principiosAtivosAnvisa;
     }
 
-    public List<PrincipioAtivo> getPrincipiosAtivos() {
+    public List<Interacao.PrincipioAtivo> getPrincipiosAtivos() {
         return principiosAtivos;
     }
 
-    public void setPrincipiosAtivos(List<PrincipioAtivo> principiosAtivos) {
+    public void setPrincipiosAtivos(List<Interacao.PrincipioAtivo> principiosAtivos) {
         this.principiosAtivos = principiosAtivos;
     }
-
-    // Outros campos e métodos conforme necessário
 }

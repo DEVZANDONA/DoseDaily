@@ -2,17 +2,14 @@ package com.tcc.DoseDaily.API;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Interacao {
+import java.util.List;
 
+public class Interacao {
     @SerializedName("id")
     private int id;
 
-    // Outros campos
-    @SerializedName("principios_ativos")
-    private String principiosAtivos;
-
-    @SerializedName("ean")
-    private String ean;
+    @SerializedName("url")
+    private String url;
 
     @SerializedName("gravidade")
     private String gravidade;
@@ -23,31 +20,103 @@ public class Interacao {
     @SerializedName("acao")
     private String acao;
 
-    // Adicione outros campos conforme necessário
+    @SerializedName("explicacao")
+    private String explicacao;
+
+    @SerializedName("principios_ativos")
+    private List<PrincipioAtivo> principiosAtivos;
+
+    // Getters e setters para os campos existentes
 
     public int getId() {
         return id;
     }
 
-    public String getPrincipiosAtivos() {
-        return principiosAtivos;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getEan() {
-        return ean;
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getGravidade() {
         return gravidade;
     }
 
+    public void setGravidade(String gravidade) {
+        this.gravidade = gravidade;
+    }
+
     public String getEvidencia() {
         return evidencia;
+    }
+
+    public void setEvidencia(String evidencia) {
+        this.evidencia = evidencia;
     }
 
     public String getAcao() {
         return acao;
     }
 
-    // Adicione getters/setters para outros campos, se necessário
+    public void setAcao(String acao) {
+        this.acao = acao;
+    }
+
+    public String getExplicacao() {
+        return explicacao;
+    }
+
+    public void setExplicacao(String explicacao) {
+        this.explicacao = explicacao;
+    }
+
+    public List<PrincipioAtivo> getPrincipiosAtivos() {
+        return principiosAtivos;
+    }
+
+    public void setPrincipiosAtivos(List<PrincipioAtivo> principiosAtivos) {
+        this.principiosAtivos = principiosAtivos;
+    }
+
+    // Classe interna para representar o princípio ativo
+    public static class PrincipioAtivo {
+        @SerializedName("id")
+        private int id;
+
+        @SerializedName("url")
+        private String url;
+
+        @SerializedName("nome")
+        private String nome;
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        public String getNome() {
+            return nome;
+        }
+
+        public void setNome(String nome) {
+            this.nome = nome;
+        }
+    }
 }

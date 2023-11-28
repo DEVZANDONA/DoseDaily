@@ -55,8 +55,6 @@
         <activity
             android:name=".System_UI.HomePage"
             android:exported="false" />
-        <activity android:name=".System_UI.InteractionsActivity"
-            android:exported="false"/>
         <activity
             android:name=".System_UI.HistoryActivity"
             android:exported="false" />
