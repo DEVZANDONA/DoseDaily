@@ -1,6 +1,7 @@
 package com.tcc.DoseDaily.System_UI;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -91,6 +92,27 @@ public class HistoryActivity extends AppCompatActivity {
         btnLimparHistorico.setOnClickListener(view -> clearHistory());
     }
 
+    private String traduzirDiaDaSemana(String diaEmIngles) {
+        switch (diaEmIngles) {
+            case "Monday":
+                return "Segunda-Feira";
+            case "Tuesday":
+                return "Terça-Feira";
+            case "Wednesday":
+                return "Quarta-Feira";
+            case "Thursday":
+                return "Quinta-Feira";
+            case "Friday":
+                return "Sexta-Feira";
+            case "Saturday":
+                return "Sábado";
+            case "Sunday":
+                return "Domingo";
+            default:
+                return diaEmIngles;
+        }
+    }
+
     private void loadHistoryData() {
         historicoReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -98,10 +120,10 @@ public class HistoryActivity extends AppCompatActivity {
                 itemList.clear(); // Limpar a lista para evitar duplicatas
 
                 // Adicionar todas as divisões com os dias da semana
-                String[] daysOfWeek = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+                String[] daysOfWeek = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 
                 for (String dayOfWeek : daysOfWeek) {
-                    itemList.add(new HistoricAdapter.SectionItem(dayOfWeek));
+                    itemList.add(new HistoricAdapter.SectionItem(traduzirDiaDaSemana(dayOfWeek)));
 
                     // Adicionar os itens correspondentes a cada divisão
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -113,6 +135,9 @@ public class HistoryActivity extends AppCompatActivity {
 
                             // Adicionar o item à lista
                             itemList.add(contentItem);
+
+                            // Adicione logs para verificar os dados
+                            Log.d("HistoricAdapter", "Item adicionado: " + historyItem.getMedicationName());
                         }
                     }
                 }
@@ -123,6 +148,7 @@ public class HistoryActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 // Lidar com erros, se necessário
+                Log.e("HistoricAdapter", "Erro ao recuperar dados: " + databaseError.getMessage());
             }
         });
     }

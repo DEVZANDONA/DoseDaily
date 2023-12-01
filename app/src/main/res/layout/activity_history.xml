@@ -13,6 +13,17 @@
         android:layout_height="match_parent"
         tools:context=".System_UI.HistoryActivity">
 
+        <!-- Adicione o TextView para exibir "Histórico de Consumo" -->
+        <TextView
+            android:id="@+id/tvHistoricoTitulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="90dp"
+            android:layout_marginTop="16dp"
+            android:text="Histórico de Consumo"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
         <ImageView
             android:id="@+id/side_ic"
             android:layout_width="30dp"
@@ -27,8 +38,8 @@
             android:layout_height="match_parent"
             android:id="@+id/recyclerView"
             android:layout_marginTop="5dp"
-        android:scrollbars="vertical"
-        android:layout_below="@id/side_ic" />
+            android:scrollbars="vertical"
+            android:layout_below="@id/tvHistoricoTitulo" />
 
         <Button
             android:id="@+id/btnLimparHistorico"

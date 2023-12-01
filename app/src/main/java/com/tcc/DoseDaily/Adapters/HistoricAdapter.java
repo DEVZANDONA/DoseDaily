@@ -112,7 +112,7 @@ public class HistoricAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             super(itemView);
             sectionTextView = itemView.findViewById(R.id.sectionTextView);
             sectionTextView.setTypeface(null, Typeface.BOLD);
-            sectionTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+            sectionTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
         }
 
         public void bind(SectionItem sectionItem) {

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -39,10 +40,10 @@ import java.util.Map;
 
 public class DetailActivity extends AppCompatActivity {
     FloatingActionButton editButton, deleteButton;
-    TextView detailDesc, detailTitle, detailLang;
+    TextView  title,edit_dosagem, edit_descricao;
     String imageUrl, key, medicamentoId;
     View btNotificacao,btConsumir;
-
+    ImageView bt_riscos;
     String userId;
 
     DatabaseReference medicamentoReference;
@@ -57,19 +58,21 @@ public class DetailActivity extends AppCompatActivity {
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         medicamentoReference = FirebaseDatabase.getInstance().getReference("Medicamento");
 
-        detailDesc = findViewById(R.id.detailDesc);
-        detailTitle = findViewById(R.id.detailTitle);
-        detailLang = findViewById(R.id.detailLang);
+        bt_riscos = findViewById(R.id.bt_riscos);
+        edit_descricao = findViewById(R.id.edit_descricao);
+        title = findViewById(R.id.title);
+        edit_dosagem = findViewById(R.id.edit_dosagem);
         btConsumir = findViewById(R.id.bt_consumir);
-        com.github.clans.fab.FloatingActionButton editButton = findViewById(R.id.editButton);
-        com.github.clans.fab.FloatingActionButton deleteButton = findViewById(R.id.deleteButton);
+        FloatingActionButton editButton = findViewById(R.id.editButton);
+        FloatingActionButton deleteButton = findViewById(R.id.deleteButton);
         btNotificacao = findViewById(R.id.bt_notificacao);
+
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            detailDesc.setText(bundle.getString("Description"));
-            detailTitle.setText(bundle.getString("Title"));
-            detailLang.setText(bundle.getString("Language"));
+            edit_descricao.setText(bundle.getString("Description"));
+            title.setText(bundle.getString("Title"));
+            edit_dosagem.setText(bundle.getString("Language"));
             key = bundle.getString("Key");
             imageUrl = bundle.getString("Image");
             medicamentoId = bundle.getString("MedicamentoId");
@@ -113,24 +116,24 @@ public class DetailActivity extends AppCompatActivity {
                                 int horaAtual = calendar.get(Calendar.HOUR_OF_DAY);
                                 int minutoAtual = calendar.get(Calendar.MINUTE);
 
-                                // Criar um TimePickerDialog para permitir que o usuário escolha a hora
+
                                 TimePickerDialog timePickerDialog = new TimePickerDialog(DetailActivity.this,
                                         new TimePickerDialog.OnTimeSetListener() {
                                             @Override
                                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                                // Salvar a hora e os minutos escolhidos pelo usuário em variáveis
+
                                                 int horaEscolhida = hourOfDay;
                                                 int minutosEscolhidos = minute;
 
-                                                // Formatar a data como "ano-mes-dia hora:minuto"
+
                                                 String dataFormatada = String.format(Locale.getDefault(), "%04d-%02d-%02d %02d:%02d",
                                                         anoEscolhido, mesEscolhido + 1, diaEscolhido, horaEscolhida, minutosEscolhidos);
 
-                                                // Obter o título e a descrição do medicamento
-                                                String tituloMedicamento = detailTitle.getText().toString();
-                                                String descricaoMedicamento = detailDesc.getText().toString();
 
-                                                // Criar um AlertDialog para permitir que o usuário escolha a frequência
+                                                String tituloMedicamento = title.getText().toString();
+                                                String descricaoMedicamento = edit_descricao.getText().toString();
+
+
                                                 AlertDialog.Builder builder = new AlertDialog.Builder(DetailActivity.this);
                                                 builder.setTitle("Escolha a Frequência");
 
@@ -198,6 +201,10 @@ public class DetailActivity extends AppCompatActivity {
         btConsumir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Button btnConsumir = (Button) btConsumir;
+                String textoAtual = btnConsumir.getText().toString();
+
                 // Obter a hora atual
                 Calendar calendar = Calendar.getInstance();
                 int horaAtual = calendar.get(Calendar.HOUR_OF_DAY);
@@ -210,7 +217,7 @@ public class DetailActivity extends AppCompatActivity {
                 int diaAtual = calendar.get(Calendar.DAY_OF_MONTH);
 
                 // Obter o título do medicamento
-                String tituloMedicamento = detailTitle.getText().toString();
+                String tituloMedicamento = title.getText().toString();
 
                 // Obter o dia da semana atual
                 SimpleDateFormat sdf = new SimpleDateFormat("EEEE", Locale.getDefault());
@@ -246,13 +253,34 @@ public class DetailActivity extends AppCompatActivity {
                 startActivity(historyIntent);
             }
         });
+
+        bt_riscos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Criar e exibir um AlertDialog com a mensagem fornecida
+                AlertDialog.Builder builder = new AlertDialog.Builder(DetailActivity.this);
+                builder.setTitle("De acordo com o Ministério da Saúde:");
+                builder.setMessage("A automedicação, muitas vezes vista como uma solução para o alívio imediato de alguns sintomas, pode trazer consequências mais graves do que se imagina.");
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // Opcional: adicionar lógica adicional ao clicar em "OK"
+                    }
+                });
+
+                // Exibir o AlertDialog
+                builder.show();
+            }
+        });
+
     }
 
         private void navigateToUpdateActivity() {
         Intent intent = new Intent(DetailActivity.this, UpdateMedicineActivity.class)
-                .putExtra("Title", detailTitle.getText().toString())
-                .putExtra("Description", detailDesc.getText().toString())
-                .putExtra("Language", detailLang.getText().toString())
+                .putExtra("Title", title.getText().toString())
+                .putExtra("Description", edit_descricao.getText().toString())
+                .putExtra("Language", edit_dosagem.getText().toString())
                 .putExtra("Image", imageUrl)
                 .putExtra("Key", key);
         startActivity(intent);

@@ -1,0 +1,63 @@
+<!-- res/layout/activity_main.xml -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#282828">
+
+    <RelativeLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true">
+
+        <RelativeLayout
+            android:id="@+id/card"
+            android:layout_width="335dp"
+            android:layout_height="72dp"
+            android:layout_centerHorizontal="true"
+            android:background="#282828">
+
+            <RelativeLayout
+                android:id="@+id/imageContainer"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/image_placeholder">
+
+                <!-- Sua imagem aqui -->
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imageContainer"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="sans-serif"
+                android:lineHeight="18sp"
+                android:text="Remember to take your medication"
+                android:textColor="#ffffff"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_below="@+id/imageContainer"
+                android:layout_marginStart="271dp"
+                android:layout_marginTop="112dp"
+                android:background="#ffffff"
+                android:onClick="onButtonClick">
+
+                <!-- Ícone aqui -->
+
+            </Button>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>
