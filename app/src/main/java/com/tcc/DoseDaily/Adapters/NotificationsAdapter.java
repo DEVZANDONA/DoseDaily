@@ -41,7 +41,6 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         notifyDataSetChanged();
     }
 
-    // Método para obter o item filtrado em uma posição específica
     public Notifications getFilteredItem(int position) {
         return filteredList.get(position);
     }

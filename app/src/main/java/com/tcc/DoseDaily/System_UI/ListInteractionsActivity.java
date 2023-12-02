@@ -218,7 +218,7 @@ public class ListInteractionsActivity extends AppCompatActivity {
                 List<Interacao> interacoesFiltradas = filtrarInteracoes(todasInteracoes, segundoPrincipioAtivoId);
 
                 if (!interacoesFiltradas.isEmpty()) {
-                    Interacao primeiraInteracao = interacoesFiltradas.get(0); // Assumindo que você está interessado na primeira interação da lista
+                    Interacao primeiraInteracao = interacoesFiltradas.get(0);
                     exibirDialogoComExplicacao(primeiraInteracao.getExplicacao(), primeiraInteracao.getGravidade());
                 } else {
 
@@ -258,7 +258,7 @@ public class ListInteractionsActivity extends AppCompatActivity {
 
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setGravity(Gravity.CENTER); // Centralizar o layout
+        layout.setGravity(Gravity.CENTER);
 
 
         TextView tituloTextView = new TextView(this);

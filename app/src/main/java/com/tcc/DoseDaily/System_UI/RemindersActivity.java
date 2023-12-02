@@ -77,7 +77,6 @@ public class RemindersActivity extends AppCompatActivity {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Medicamento");
 
         adapter = new NotificationsAdapter(notificationsList, (notification, position) -> {
-            Log.d("RemindersActivity", "Item Clicked: " + notification.getTitulo());
             showCustomDialog(position);
         });
 

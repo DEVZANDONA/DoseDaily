@@ -50,7 +50,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private boolean getSwitchState() {
         SharedPreferences preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        // Obtém o estado atual do switch, o valor padrão é true (ligado)
+
         return preferences.getBoolean(SWITCH_STATE_PREF, true);
     }
 
