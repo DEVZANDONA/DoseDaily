@@ -28,7 +28,6 @@
             android:layout_width="300dp"
             android:layout_height="200dp"
             android:layout_gravity="center"
-            android:background="@drawable/rounded_border"
             android:padding="8dp"
             android:scaleType="fitXY"
             android:src="@drawable/medicamentos" />
@@ -53,9 +52,12 @@
                 android:id="@+id/edit_descricao"
                 style="@style/Edit_Text"
                 android:layout_marginTop="2dp"
-                android:background="@drawable/edit_text"
+                android:background="@drawable/editext_2"
+                android:drawableStart="@drawable/baseline_edit_24"
+                android:drawablePadding="8dp"
                 android:hint="Descrição"
                 android:inputType="text" />
+
 
             <TextView
                 android:id="@+id/textViewDosagemLabel"
@@ -71,7 +73,9 @@
                 android:id="@+id/edit_dosagem"
                 style="@style/Edit_Text"
                 android:layout_marginTop="2dp"
-                android:background="@drawable/edit_text"
+                android:background="@drawable/editext_2"
+                android:drawableStart="@drawable/baseline_medication_24"
+                android:drawablePadding="8dp"
                 android:hint="Dosagem"
                 android:inputType="text" />
         </LinearLayout>

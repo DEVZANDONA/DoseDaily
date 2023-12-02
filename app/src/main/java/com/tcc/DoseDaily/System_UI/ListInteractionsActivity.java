@@ -1,18 +1,26 @@
 package com.tcc.DoseDaily.System_UI;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.tcc.DoseDaily.API.ApiClient;
 import com.tcc.DoseDaily.API.ApiResponse;
 import com.tcc.DoseDaily.API.Interacao;
@@ -37,6 +45,7 @@ public class ListInteractionsActivity extends AppCompatActivity {
     private List<Interacao.PrincipioAtivo> principiosAtivosSelecionados = new ArrayList<>();
     private Integer primeiroPrincipioAtivoId;
     private Integer segundoPrincipioAtivoId;
+    private boolean snackbarExibida = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,20 +103,22 @@ public class ListInteractionsActivity extends AppCompatActivity {
         principioAtivoAdapter = new PrincipioAtivoAdapter(principiosAtivos, new PrincipioAtivoAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Interacao.PrincipioAtivo principioAtivo) {
-                selecionarPrincipioAtivo(principioAtivo);
+                if (!snackbarExibida) {
+                    // Exibe a Snackbar apenas no primeiro clique
+                    mostrarSnackbar("Pressione outro medicamento para visualizar a interação");
+                    snackbarExibida = true;  // Define a flag para indicar que a Snackbar foi exibida
+                }
+
+                Log.d("PrincipioAtivoSelecionado", "ID: " + principioAtivo.getId() + ", Nome: " + principioAtivo.getNome());
+
+                if (principiosAtivosSelecionados.size() < 2) {
+                    addPrincipioAtivoToList(principioAtivo);
+                } else {
+                    Toast.makeText(ListInteractionsActivity.this, "Apenas dois princípios ativos podem ser selecionados de cada vez.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         recyclerView.setAdapter(principioAtivoAdapter);
-    }
-
-    private void selecionarPrincipioAtivo(Interacao.PrincipioAtivo principioAtivo) {
-        Log.d("PrincipioAtivoSelecionado", "ID: " + principioAtivo.getId() + ", Nome: " + principioAtivo.getNome());
-
-        if (principiosAtivosSelecionados.size() < 2) {
-            addPrincipioAtivoToList(principioAtivo);
-        } else {
-            Toast.makeText(this, "Apenas dois princípios ativos podem ser selecionados de cada vez.", Toast.LENGTH_SHORT).show();
-        }
     }
 
     private void addPrincipioAtivoToList(Interacao.PrincipioAtivo principioAtivo) {
@@ -123,7 +134,7 @@ public class ListInteractionsActivity extends AppCompatActivity {
                 buscarInteracoes(primeiroPrincipioAtivoId, segundoPrincipioAtivoId);
             }
         } else {
-            Toast.makeText(this, "Este princípio ativo já foi selecionado.", Toast.LENGTH_SHORT).show();
+            mostrarSnackbar("Este princípio ativo já foi selecionado.");
         }
     }
 
@@ -194,14 +205,49 @@ public class ListInteractionsActivity extends AppCompatActivity {
 
     private void exibirDialogoComExplicacao(String explicacao, String gravidade) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Explicação: " + explicacao + "\nGravidade: " + gravidade)
-                .setTitle("Explicação da Interação")
-                .setPositiveButton("OK", (dialog, id) -> {
-                    dialog.dismiss();
-                    principiosAtivosSelecionados.clear();
-                });
+
+        // Configurar o layout do AlertDialog
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.setGravity(Gravity.CENTER); // Centralizar o layout
+
+        // Configurar o texto do título
+        TextView tituloTextView = new TextView(this);
+        tituloTextView.setText("Explicação da Interação");
+        tituloTextView.setTypeface(null, Typeface.BOLD);
+        tituloTextView.setTextSize(18); // Tamanho do texto em sp
+        tituloTextView.setGravity(Gravity.CENTER); // Centralizar o título
+        layout.addView(tituloTextView);
+
+        // Configurar o texto da explicação
+        TextView explicacaoTextView = new TextView(this);
+        explicacaoTextView.setText("Explicação: " + explicacao);
+        explicacaoTextView.setTypeface(null, Typeface.BOLD);
+        explicacaoTextView.setTextSize(16); // Tamanho do texto em sp
+        explicacaoTextView.setGravity(Gravity.START); // Alinhar à esquerda (pode ajustar conforme necessário)
+        layout.addView(explicacaoTextView);
+
+        // Configurar o texto da gravidade
+        TextView gravidadeTextView = new TextView(this);
+        gravidadeTextView.setText("Gravidade: " + gravidade); // Adicionado o valor da gravidade na mesma linha
+        gravidadeTextView.setTypeface(null, Typeface.BOLD);
+        gravidadeTextView.setTextSize(16); // Tamanho do texto em sp
+        gravidadeTextView.setTextColor(Color.RED);
+        gravidadeTextView.setGravity(Gravity.START); // Alinhar à esquerda
+        layout.addView(gravidadeTextView);
+
+        // Aplicar o layout personalizado ao AlertDialog
+        builder.setView(layout);
+
+        builder.setPositiveButton("OK", (dialog, id) -> {
+            dialog.dismiss();
+            principiosAtivosSelecionados.clear();
+            snackbarExibida = false;
+            principioAtivoAdapter.clearSelection(); // Limpar a seleção
+        });
 
         AlertDialog dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_shape);
         dialog.show();
     }
 
@@ -212,9 +258,24 @@ public class ListInteractionsActivity extends AppCompatActivity {
                 .setPositiveButton("OK", (dialog, id) -> {
                     dialog.dismiss();
                     principiosAtivosSelecionados.clear();
+                    snackbarExibida = false;  // Reseta a flag para permitir que a Snackbar seja exibida novamente
+                    principioAtivoAdapter.clearSelection(); // Limpar a seleção
                 });
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    private void mostrarSnackbar(String mensagem) {
+        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), mensagem, Snackbar.LENGTH_LONG);
+        View snackbarView = snackbar.getView();
+        // Aplicar a forma personalizada
+        snackbarView.setBackground(ContextCompat.getDrawable(this, R.drawable.snackbar_bg));
+        // Centralizar a mensagem
+        TextView textView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
+        textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        // Fonte em negrito
+        textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
+        snackbar.show();
     }
 }
