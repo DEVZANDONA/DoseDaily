@@ -21,7 +21,6 @@ public class Medicamento {
     @SerializedName("principios_ativos")
     private List<Interacao.PrincipioAtivo> principiosAtivos;
 
-    // Construtores, getters e setters conforme necessário
 
     public int getId() {
         return id;

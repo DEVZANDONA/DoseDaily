@@ -108,7 +108,7 @@ public class UpdateMedicineActivity extends AppCompatActivity {
     public void saveData() {
         if (uri == null) {
             imageUrl = oldImageURL;
-            updateData(); // Se não há nova imagem, simplesmente atualize os dados
+            updateData();
             return;
         }
 
@@ -145,22 +145,22 @@ public class UpdateMedicineActivity extends AppCompatActivity {
     }
 
     public void updateData() {
-        // Obtendo o ID do usuário logado
+
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         title = updateTitle.getText().toString().trim();
         desc = updateDesc.getText().toString().trim();
         lang = updateLang.getText().toString();
 
-        // Criando a instância de DataClass com o userId
+
         Medicines medicines = new Medicines(title, desc, lang, imageUrl, key, userId);
 
-        // Salvando os dados no banco de dados
+
         databaseReference.setValue(medicines).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    // Se a imagem foi alterada, apague a imagem antiga do Firebase Storage.
+
                     if (!imageUrl.equals(oldImageURL)) {
                         StorageReference reference = FirebaseStorage.getInstance().getReferenceFromUrl(oldImageURL);
                         reference.delete();

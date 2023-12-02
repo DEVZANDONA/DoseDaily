@@ -10,7 +10,7 @@ public class Notifications implements Serializable {
     private String titulo;
     private String key;
 
-    // Construtor vazio necessário para o Firebase
+
     public Notifications() {}
 
     public Notifications(String corpo, String deviceToken, String tempoNotificacao, String titulo) {

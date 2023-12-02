@@ -38,10 +38,6 @@ public class Medicines {
     }
 
 
-
-
-    // Getters e Setters
-
     public String getKey() {
         return key;
     }

@@ -25,7 +25,6 @@
                 android:layout_height="48dp"
                 android:background="@drawable/image_placeholder">
 
-                <!-- Sua imagem aqui -->
 
             </RelativeLayout>
 
@@ -52,7 +51,6 @@
                 android:background="#ffffff"
                 android:onClick="onButtonClick">
 
-                <!-- Ícone aqui -->
 
             </Button>
 

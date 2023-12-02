@@ -15,7 +15,7 @@ public class ApiResponse<T> {
     private String previous;
 
     @SerializedName("results")
-    private T results;  // Remova a anotação SerializedName para "results"
+    private T results;
 
     public int getCount() {
         return count;

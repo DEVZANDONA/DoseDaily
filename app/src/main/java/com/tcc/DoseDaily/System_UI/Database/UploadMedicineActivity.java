@@ -88,20 +88,20 @@ public class UploadMedicineActivity extends AppCompatActivity {
     public void saveData() {
         dialog.show();
 
-        // Obtendo o usuário atual
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        // Verifica se o usuário está autenticado
+
         if (user != null) {
-            // Obtendo o ID do usuário logado
+
             String userId = ((FirebaseUser) user).getUid();
 
             if (uri == null) {
-                // Se a URI for nula, simplesmente defina o URL da imagem padrão
+
                 imageURL = "https://firebasestorage.googleapis.com/v0/b/dosedaily-4dd77.appspot.com/o/Medicamento%20Imagens%2Fdefault_image.jpg?alt=media&token=7158d78e-fc26-4b72-bbc9-9cf2c2455b52&_gl=1*1kabngz*_ga*MTgwNTM1MzkzMC4xNjk0MTkxMjEy*_ga_CW55HF8NVT*MTY5NjMwNDY0Ni4yNi4xLjE2OTYzMDcxNzQuNTkuMC4w";
                 uploadData(userId);
             } else {
-                // Caso contrário, faça o upload da imagem selecionada pelo usuário
+
                 StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Medicamento Imagens").child(uri.getLastPathSegment());
                 storageReference.putFile(uri).addOnSuccessListener(taskSnapshot -> {
                     Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
@@ -120,7 +120,7 @@ public class UploadMedicineActivity extends AppCompatActivity {
                 });
             }
         } else {
-            // Se o usuário não estiver autenticado, exibe uma mensagem
+
             dialog.dismiss();
             Toast.makeText(UploadMedicineActivity.this, "You need to be logged in to perform this action", Toast.LENGTH_SHORT).show();
         }

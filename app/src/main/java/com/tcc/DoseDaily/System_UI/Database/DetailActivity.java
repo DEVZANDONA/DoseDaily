@@ -58,7 +58,7 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        historicoReference = FirebaseDatabase.getInstance().getReference("Histórico");  // Adicione esta linha
+        historicoReference = FirebaseDatabase.getInstance().getReference("Histórico");
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         medicamentoReference = FirebaseDatabase.getInstance().getReference("Medicamento");
 
@@ -105,12 +105,12 @@ public class DetailActivity extends AppCompatActivity {
                 int mesAtual = calendar.get(Calendar.MONTH);
                 int diaAtual = calendar.get(Calendar.DAY_OF_MONTH);
 
-                // Criar um DatePickerDialog para permitir que o usuário escolha a data
+
                 DatePickerDialog datePickerDialog = new DatePickerDialog(DetailActivity.this,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                // Salvar o ano, mês e dia escolhidos pelo usuário em variáveis
+
                                 int anoEscolhido = year;
                                 int mesEscolhido = month; // O mês começa do zero
                                 int diaEscolhido = dayOfMonth;
@@ -141,7 +141,7 @@ public class DetailActivity extends AppCompatActivity {
                                                 AlertDialog.Builder builder = new AlertDialog.Builder(DetailActivity.this);
                                                 builder.setTitle("Escolha a Frequência");
 
-                                                // Opções de frequência
+
                                                 String[] opcoesFrequencia = {"Nenhum", "Diariamente", "Semanalmente", "Mensalmente"};
 
                                                 builder.setItems(opcoesFrequencia, new DialogInterface.OnClickListener() {
@@ -149,7 +149,7 @@ public class DetailActivity extends AppCompatActivity {
                                                     public void onClick(DialogInterface dialog, int which) {
                                                         String frequenciaEscolhida = opcoesFrequencia[which];
 
-                                                        // Obter o deviceToken do usuário usando Firebase Messaging
+
                                                         FirebaseMessaging.getInstance().getToken()
                                                                 .addOnCompleteListener(new OnCompleteListener<String>() {
                                                                     @Override
@@ -157,13 +157,13 @@ public class DetailActivity extends AppCompatActivity {
                                                                         if (task.isSuccessful() && task.getResult() != null) {
                                                                             String deviceToken = task.getResult();
 
-                                                                            // Obter uma referência ao nó "Medicamento" no RealTimeDatabase
+
                                                                             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Medicamento");
 
-                                                                            // Gerar uma chave única para o novo medicamento
+
                                                                             String medicamentoKey = databaseReference.push().getKey();
 
-                                                                            // Criar um mapa com os dados do medicamento
+
                                                                             Map<String, Object> medicamentoData = new HashMap<>();
                                                                             medicamentoData.put("titulo", tituloMedicamento);
                                                                             medicamentoData.put("corpo", descricaoMedicamento);
@@ -171,7 +171,7 @@ public class DetailActivity extends AppCompatActivity {
                                                                             medicamentoData.put("deviceToken", deviceToken);
                                                                             medicamentoData.put("frequencia", frequenciaEscolhida); // Adicionar a frequência ao mapa
 
-                                                                            // Enviar os dados para o RealTimeDatabase
+
                                                                             databaseReference.child(medicamentoKey).setValue(medicamentoData)
                                                                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                                         @Override
@@ -191,14 +191,14 @@ public class DetailActivity extends AppCompatActivity {
                                                     }
                                                 });
 
-                                                builder.show(); // Exibir o AlertDialog
+                                                builder.show();
                                             }
                                         }, horaAtual, minutoAtual, true);
-                                timePickerDialog.show(); // Exibir o TimePickerDialog para o usuário
+                                timePickerDialog.show();
                             }
-                        }, anoAtual, mesAtual, diaAtual); // ano, mes e dia são as variáveis que representam a data atual
+                        }, anoAtual, mesAtual, diaAtual);
 
-                datePickerDialog.show(); // Exibir o DatePickerDialog para o usuário
+                datePickerDialog.show();
             }
         });
 
@@ -209,32 +209,32 @@ public class DetailActivity extends AppCompatActivity {
                 Button btnConsumir = (Button) btConsumir;
                 String textoAtual = btnConsumir.getText().toString();
 
-                // Obter a hora atual
+
                 Calendar calendar = Calendar.getInstance();
                 int horaAtual = calendar.get(Calendar.HOUR_OF_DAY);
                 int minutoAtual = calendar.get(Calendar.MINUTE);
 
-                // Formatar a hora como "HH:mm"
+
                 String horaFormatada = String.format(Locale.getDefault(), "%02d:%02d", horaAtual, minutoAtual);
 
-                // Obter o dia do sistema
+
                 int diaAtual = calendar.get(Calendar.DAY_OF_MONTH);
 
-                // Obter o título do medicamento
+
                 String tituloMedicamento = title.getText().toString();
 
-                // Obter o dia da semana atual
+
                 SimpleDateFormat sdf = new SimpleDateFormat("EEEE", Locale.getDefault());
                 Date dataAtual = calendar.getTime();
                 String diaSemana = sdf.format(dataAtual);
 
-                // Criar uma instância de HistoryItem
+
                 HistoryItem historyItem = new HistoryItem(tituloMedicamento, horaFormatada, diaAtual, diaSemana);
 
-                // Obter uma referência ao nó "Histórico" no RealTimeDatabase
+
                 DatabaseReference historicoReference = FirebaseDatabase.getInstance().getReference("Histórico");
 
-                // Adicionar os dados do histórico ao nó "Histórico"
+
                 historicoReference.push().setValue(historyItem)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
@@ -247,13 +247,13 @@ public class DetailActivity extends AppCompatActivity {
                             }
                         });
 
-                // Criar um Intent para abrir a HistoryActivity
+
                 Intent historyIntent = new Intent(DetailActivity.this, HistoryActivity.class);
-                // Passar os dados como extras para a HistoryActivity
+
                 historyIntent.putExtra("medicationName", tituloMedicamento);
                 historyIntent.putExtra("consumptionTime", horaFormatada);
                 historyIntent.putExtra("consumptionDay", diaAtual);
-                // Iniciar a HistoryActivity
+
                 startActivity(historyIntent);
             }
         });
@@ -261,28 +261,27 @@ public class DetailActivity extends AppCompatActivity {
         bt_riscos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Criar e exibir um AlertDialog com a mensagem fornecida
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(DetailActivity.this);
 
-                // Configurar o restante do AlertDialog
+
                 builder.setMessage("A automedicação, muitas vezes vista como uma solução para o alívio imediato de alguns sintomas, pode trazer consequências mais graves do que se imagina.");
 
-                // Criar um TextView customizado para o título
+
                 TextView titleTextView = new TextView(DetailActivity.this);
                 titleTextView.setText("De acordo com o Ministério da Saúde:");
-                titleTextView.setTextSize(20); // Tamanho do texto do título em sp
-                titleTextView.setTypeface(null, Typeface.BOLD); // Negrito
-                titleTextView.setGravity(Gravity.CENTER); // Centralizar o texto
-                int paddingTop = getResources().getDimensionPixelSize(com.intuit.sdp.R.dimen._8sdp); // Defina a dimensão no arquivo de recursos (dimens.xml)
-                titleTextView.setPadding(0, paddingTop, 0, 0); // Adicione o padding superior
+                titleTextView.setTextSize(20);
+                titleTextView.setTypeface(null, Typeface.BOLD);
+                titleTextView.setGravity(Gravity.CENTER);
+                int paddingTop = getResources().getDimensionPixelSize(com.intuit.sdp.R.dimen._8sdp);
+                titleTextView.setPadding(0, paddingTop, 0, 0);
 
-                // Adicionar o TextView customizado como título
+
                 builder.setCustomTitle(titleTextView);
 
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        // Opcional: adicionar lógica adicional ao clicar em "OK"
                     }
                 });
 

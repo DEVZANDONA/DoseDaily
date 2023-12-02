@@ -51,7 +51,7 @@ public class ListMedicinesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medicamentos);
 
-        // Verifica se o usuário está autenticado
+
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
 
@@ -65,28 +65,22 @@ public class ListMedicinesActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawer_layout2);
         navigationView = findViewById(R.id.nav_view2);
 
-        // Inicialize a SideBar
         sideBar = new SideBar();
         sideBar.setupDrawer(this, drawerLayout, navigationView, userId);
 
-        // Configuração do clique no ícone lateral (side_ic)
         ImageView sideIcon = findViewById(R.id.side_ic);
         sideIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Abra a SideBar quando o ícone for clicado
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
 
-        // Obtenha o ID do usuário atual usando Firebase Authentication
         userId = user.getUid();
 
-        // Construa a Query de medicamentos do usuário usando o ID do usuário
         userMedicamentoQuery = FirebaseDatabase.getInstance().getReference("Medicamento")
                 .orderByChild("userId").equalTo(userId);
 
-        // Configuração da interface do usuário
         recyclerView = findViewById(R.id.recyclerView);
         fab = findViewById(R.id.fab);
         searchView = findViewById(R.id.search);
@@ -104,7 +98,6 @@ public class ListMedicinesActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
 
-        // Recupere dados do banco de dados e configure o adaptador
         dialog.show();
         eventListener = userMedicamentoQuery.addValueEventListener(new ValueEventListener() {
             @Override
@@ -127,7 +120,6 @@ public class ListMedicinesActivity extends AppCompatActivity {
             }
         });
 
-        // Configuração da funcionalidade de pesquisa
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -140,7 +132,6 @@ public class ListMedicinesActivity extends AppCompatActivity {
             }
         });
 
-        // Configuração do botão de adicionar novo medicamento
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

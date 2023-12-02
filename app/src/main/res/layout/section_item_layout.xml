@@ -24,7 +24,6 @@
         android:layout_below="@id/sectionTitle"
         android:layout_marginTop="8dp" />
 
-    <!-- Adiciona a seta para baixo -->
     <ImageView
         android:id="@+id/setaImageView"
         android:layout_width="39dp"

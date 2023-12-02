@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.tcc.DoseDaily">
-    <!-- Permissões do aplicativo -->
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -36,7 +36,7 @@
             android:exported="false" />
         <activity
             android:name=".System_UI.PermissionRequestActivity"
-            android:exported="false" /> <!-- Atividades do seu aplicativo -->
+            android:exported="false" />
         <activity
             android:name=".System_UI.Database.UpdateMedicineActivity"
             android:exported="false" />
@@ -69,14 +69,14 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- Configurando o serviço de mensagens do Firebase -->
+        </activity>
         <service
             android:name=".Services.MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
-        </service> <!-- Definindo o canal de notificação -->
+        </service>
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="channel_id" />

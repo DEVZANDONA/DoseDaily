@@ -50,21 +50,21 @@ public class HistoryActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawer_layout5);
         navigationView = findViewById(R.id.nav_view5);
 
-        // Verifica se o usuário está autenticado
+
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
         userId = user.getUid();
 
-        // Inicialize a SideBar
+
         sideBar = new SideBar();
         sideBar.setupDrawer(this, drawerLayout, navigationView, userId);
 
-        // Configuração do clique no ícone lateral (side_ic)
+
         ImageView sideIcon = findViewById(R.id.side_ic);
         sideIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Abra a SideBar quando o ícone for clicado
+
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
@@ -73,22 +73,22 @@ public class HistoryActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         Button btnLimparHistorico = findViewById(R.id.btnLimparHistorico);
 
-        // Configurar o RecyclerView
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Adicionar o ItemDecoration para adicionar divisores entre as seções
+
         recyclerView.addItemDecoration(new DayDividerItemDecoration(this, getResources().getDimensionPixelSize(R.dimen.divider_height)));
 
         historicAdapter = new HistoricAdapter(itemList);
         recyclerView.setAdapter(historicAdapter);
 
-        // Obter uma referência ao nó "Histórico" no RealTimeDatabase
+
         historicoReference = FirebaseDatabase.getInstance().getReference("Histórico");
 
-        // Carregar os dados do histórico
+
         loadHistoryData();
 
-        // Adicionar um listener ao botão para limpar o histórico (se necessário)
+
         btnLimparHistorico.setOnClickListener(view -> clearHistory());
     }
 
@@ -119,7 +119,7 @@ public class HistoryActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 itemList.clear();
 
-                // Adicionar todas as divisões com os dias da semana
+
                 String[] daysOfWeek = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 
                 for (String dayOfWeek : daysOfWeek) {
@@ -129,7 +129,7 @@ public class HistoryActivity extends AppCompatActivity {
                         HistoryItem historyItem = snapshot.getValue(HistoryItem.class);
 
                         if (historyItem != null && historyItem.getDiaDaSemana().equals(dayOfWeek)) {
-                            // Adicionar conteúdo ao SectionItem associado
+
                             sectionItem.addContentItem(new HistoricAdapter.ContentItem(historyItem));
                         }
                     }
@@ -151,7 +151,6 @@ public class HistoryActivity extends AppCompatActivity {
 
 
     private void clearHistory() {
-        // Remover todos os registros do nó "Histórico"
         historicoReference.removeValue()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {

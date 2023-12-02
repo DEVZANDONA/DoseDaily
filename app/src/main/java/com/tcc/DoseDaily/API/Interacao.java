@@ -26,7 +26,6 @@ public class Interacao {
     @SerializedName("principios_ativos")
     private List<PrincipioAtivo> principiosAtivos;
 
-    // Getters e setters para os campos existentes
 
     public int getId() {
         return id;
@@ -84,7 +83,6 @@ public class Interacao {
         this.principiosAtivos = principiosAtivos;
     }
 
-    // Classe interna para representar o princípio ativo
     public static class PrincipioAtivo {
         @SerializedName("id")
         private int id;

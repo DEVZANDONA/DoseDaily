@@ -21,13 +21,13 @@ import java.util.List;
 
 public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdapter.ViewHolder> {
     private List<Notifications> notificationsList;
-    private List<Notifications> filteredList; // Lista filtrada
+    private List<Notifications> filteredList;
     private OnItemClickListener clickListener;
 
-    // Construtor que aceita a lista de notificações e o ouvinte de cliques
+
     public NotificationsAdapter(List<Notifications> notificationsList, OnItemClickListener clickListener) {
         this.notificationsList = notificationsList;
-        this.filteredList = new ArrayList<>(notificationsList); // Inicializa a lista filtrada
+        this.filteredList = new ArrayList<>(notificationsList);
         this.clickListener = clickListener;
     }
 
@@ -35,9 +35,9 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         void onItemClick(Notifications notification, int position);
     }
 
-    // Método para filtrar a lista com base na consulta de pesquisa
+
     public void filterList(List<Notifications> filteredList) {
-        this.filteredList = new ArrayList<>(filteredList); // Atualiza a lista filtrada
+        this.filteredList = new ArrayList<>(filteredList);
         notifyDataSetChanged();
     }
 
@@ -52,24 +52,23 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        // Inflar o layout personalizado
+
         View notificationView = inflater.inflate(R.layout.item_notification, parent, false);
 
-        // Retornar uma nova instância do ViewHolder
+
         return new ViewHolder(notificationView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        // Obter os dados do medicamento na posição atual
         Notifications notification = filteredList.get(position);
 
-        // Verificar se o medicamento possui os campos necessários
+
         if (notification != null) {
-            // Atualizar as visualizações do ViewHolder com os dados do medicamento
+
             holder.bind(notification);
 
-            // Modificação aqui: Adicione o clique na ViewHolder
+
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -87,7 +86,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
 
     @Override
     public int getItemCount() {
-        return filteredList.size(); // Alterado para retornar o tamanho da lista filtrada
+        return filteredList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -105,11 +104,11 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
             recHora = itemView.findViewById(R.id.recHora);
         }
 
-        // Método para atualizar a ViewHolder com dados específicos
+
         public void bind(Notifications notification) {
             recTitle.setText(notification.getTitulo());
 
-            // Formatar a data para "28/11/2023"
+
             SimpleDateFormat dateFormatInput = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             SimpleDateFormat dateFormatOutput = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -121,7 +120,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
                 e.printStackTrace();
             }
 
-            // Formatar a hora para "04:29"
+
             try {
                 Date date = dateFormatInput.parse(notification.getTempoNotificacao());
                 SimpleDateFormat timeFormatOutput = new SimpleDateFormat("HH:mm");

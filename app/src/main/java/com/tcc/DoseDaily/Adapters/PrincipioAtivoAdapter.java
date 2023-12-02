@@ -33,7 +33,7 @@ public class PrincipioAtivoAdapter extends RecyclerView.Adapter<PrincipioAtivoAd
 
     public PrincipioAtivoAdapter(List<Interacao.PrincipioAtivo> principiosAtivos, OnItemClickListener listener) {
         this.principiosAtivos = principiosAtivos;
-        this.principiosAtivosFiltrados = principiosAtivos; // Inicialmente, ambas as listas são iguais
+        this.principiosAtivosFiltrados = principiosAtivos;
         this.listener = listener;
     }
 
@@ -108,7 +108,7 @@ public class PrincipioAtivoAdapter extends RecyclerView.Adapter<PrincipioAtivoAd
                 FilterResults results = new FilterResults();
 
                 if (TextUtils.isEmpty(filterPattern)) {
-                    results.values = principiosAtivos; // Se estiver vazio, retorna a lista original
+                    results.values = principiosAtivos;
                     results.count = principiosAtivos.size();
                 } else {
                     List<Interacao.PrincipioAtivo> filteredList = new ArrayList<>();

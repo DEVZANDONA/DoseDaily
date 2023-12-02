@@ -31,7 +31,6 @@
             android:layout_marginStart="16dp"
             app:srcCompat="@drawable/ic_three_dots" />
 
-        <!-- Adicionando margin top ao RecyclerView para afastá-lo do ImageView -->
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"

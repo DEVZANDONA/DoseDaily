@@ -111,18 +111,18 @@ public class HistoricAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             SectionViewHolder sectionViewHolder = (SectionViewHolder) holder;
             sectionViewHolder.bind(sectionItem);
 
-            // Adicionar um clique no ícone da seta para expandir/recolher a seção
+
             sectionViewHolder.setaImageView.setOnClickListener(v -> {
                 sectionItem.setExpanded(!sectionItem.isExpanded());
 
                 if (sectionItem.isExpanded() && !sectionItem.getContentItems().isEmpty()) {
-                    // Se a seção estiver expandida e houver itens associados, adicione à lista principal
+
                     int contentPosition = itemList.indexOf(sectionItem) + 1;
                     itemList.addAll(contentPosition, sectionItem.getContentItems());
                     sectionViewHolder.setaImageView.setImageResource(R.drawable.seta_baixo);
                     notifyItemRangeInserted(contentPosition, sectionItem.getContentItems().size());
                 } else {
-                    // Se a seção estiver recolhida ou não houver itens, remova da lista principal
+
                     int contentPosition = itemList.indexOf(sectionItem) + 1;
                     itemList.removeAll(sectionItem.getContentItems());
                     sectionViewHolder.setaImageView.setImageResource(R.drawable.seta_lado);

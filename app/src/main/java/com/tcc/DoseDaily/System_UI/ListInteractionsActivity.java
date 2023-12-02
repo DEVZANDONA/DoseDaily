@@ -72,16 +72,15 @@ public class ListInteractionsActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawer_layout9);
         navigationView = findViewById(R.id.nav_view9);
 
-        // Inicialize a SideBar
+
         sideBar = new SideBar();
         sideBar.setupDrawer(this, drawerLayout, navigationView, userId);
 
-        // Configuração do clique no ícone lateral (side_ic)
+
         ImageView sideIcon = findViewById(R.id.side_ic);
         sideIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Abra a SideBar quando o ícone for clicado
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
@@ -101,7 +100,7 @@ public class ListInteractionsActivity extends AppCompatActivity {
         fab = findViewById(R.id.side_ic);
         drawerLayout = findViewById(R.id.drawer_layout2);
 
-        // Configuração do SearchView
+
 
         searchView.setIconifiedByDefault(false);
         searchView.setQueryHint("Pesquisar...");
@@ -157,9 +156,9 @@ public class ListInteractionsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(Interacao.PrincipioAtivo principioAtivo) {
                 if (!snackbarExibida) {
-                    // Exibe a Snackbar apenas no primeiro clique
+
                     mostrarSnackbar("Pressione outro medicamento para visualizar a interação");
-                    snackbarExibida = true;  // Define a flag para indicar que a Snackbar foi exibida
+                    snackbarExibida = true;
                 }
 
                 Log.d("PrincipioAtivoSelecionado", "ID: " + principioAtivo.getId() + ", Nome: " + principioAtivo.getNome());
@@ -178,12 +177,11 @@ public class ListInteractionsActivity extends AppCompatActivity {
         if (!principiosAtivosSelecionados.contains(principioAtivo)) {
             principiosAtivosSelecionados.add(principioAtivo);
 
-            // Armazenar IDs dos princípios ativos
             if (principiosAtivosSelecionados.size() == 1) {
                 primeiroPrincipioAtivoId = principioAtivo.getId();
             } else if (principiosAtivosSelecionados.size() == 2) {
                 segundoPrincipioAtivoId = principioAtivo.getId();
-                // Buscar interações após selecionar os dois princípios ativos
+
                 buscarInteracoes(primeiroPrincipioAtivoId, segundoPrincipioAtivoId);
             }
         } else {
@@ -192,7 +190,6 @@ public class ListInteractionsActivity extends AppCompatActivity {
     }
 
     private void buscarInteracoes(Integer primeiroPrincipioAtivoId, Integer segundoPrincipioAtivoId) {
-        // Chamada à API para obter interações entre os dois princípios ativos
         String suaChave = "5d36f30b7ecc4bd2c8fee862958c75b99a837499";
         String token = "Token " + suaChave;
 
@@ -216,20 +213,19 @@ public class ListInteractionsActivity extends AppCompatActivity {
             ApiResponse<List<Interacao>> apiResponse = response.body();
 
             if (apiResponse != null && apiResponse.getResults() != null && !apiResponse.getResults().isEmpty()) {
-                // Filtrar interações para encontrar aquelas com o segundo princípio ativo
+
                 List<Interacao> todasInteracoes = apiResponse.getResults();
                 List<Interacao> interacoesFiltradas = filtrarInteracoes(todasInteracoes, segundoPrincipioAtivoId);
 
-                // Exibir diálogo com informações das interações encontradas
                 if (!interacoesFiltradas.isEmpty()) {
                     Interacao primeiraInteracao = interacoesFiltradas.get(0); // Assumindo que você está interessado na primeira interação da lista
                     exibirDialogoComExplicacao(primeiraInteracao.getExplicacao(), primeiraInteracao.getGravidade());
                 } else {
-                    // Exibir diálogo informando que não há interações registradas
+
                     exibirDialogoSemInteracoes();
                 }
             } else {
-                // Exibir diálogo informando que não há interações registradas
+
                 exibirDialogoSemInteracoes();
             }
         } else {
@@ -259,44 +255,44 @@ public class ListInteractionsActivity extends AppCompatActivity {
     private void exibirDialogoComExplicacao(String explicacao, String gravidade) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        // Configurar o layout do AlertDialog
+
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setGravity(Gravity.CENTER); // Centralizar o layout
 
-        // Configurar o texto do título
+
         TextView tituloTextView = new TextView(this);
         tituloTextView.setText("Explicação da Interação");
         tituloTextView.setTypeface(null, Typeface.BOLD);
-        tituloTextView.setTextSize(18); // Tamanho do texto em sp
-        tituloTextView.setGravity(Gravity.CENTER); // Centralizar o título
+        tituloTextView.setTextSize(18);
+        tituloTextView.setGravity(Gravity.CENTER);
         layout.addView(tituloTextView);
 
-        // Configurar o texto da explicação
+
         TextView explicacaoTextView = new TextView(this);
         explicacaoTextView.setText("Explicação: " + explicacao);
         explicacaoTextView.setTypeface(null, Typeface.BOLD);
-        explicacaoTextView.setTextSize(16); // Tamanho do texto em sp
-        explicacaoTextView.setGravity(Gravity.START); // Alinhar à esquerda (pode ajustar conforme necessário)
+        explicacaoTextView.setTextSize(16);
+        explicacaoTextView.setGravity(Gravity.START);
         layout.addView(explicacaoTextView);
 
-        // Configurar o texto da gravidade
+
         TextView gravidadeTextView = new TextView(this);
-        gravidadeTextView.setText("Gravidade: " + gravidade); // Adicionado o valor da gravidade na mesma linha
+        gravidadeTextView.setText("Gravidade: " + gravidade);
         gravidadeTextView.setTypeface(null, Typeface.BOLD);
-        gravidadeTextView.setTextSize(16); // Tamanho do texto em sp
+        gravidadeTextView.setTextSize(16);
         gravidadeTextView.setTextColor(Color.RED);
-        gravidadeTextView.setGravity(Gravity.START); // Alinhar à esquerda
+        gravidadeTextView.setGravity(Gravity.START);
         layout.addView(gravidadeTextView);
 
-        // Aplicar o layout personalizado ao AlertDialog
+
         builder.setView(layout);
 
         builder.setPositiveButton("OK", (dialog, id) -> {
             dialog.dismiss();
             principiosAtivosSelecionados.clear();
             snackbarExibida = false;
-            principioAtivoAdapter.clearSelection(); // Limpar a seleção
+            principioAtivoAdapter.clearSelection();
         });
 
         AlertDialog dialog = builder.create();
@@ -323,12 +319,12 @@ public class ListInteractionsActivity extends AppCompatActivity {
     private void mostrarSnackbar(String mensagem) {
         Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), mensagem, Snackbar.LENGTH_LONG);
         View snackbarView = snackbar.getView();
-        // Aplicar a forma personalizada
+
         snackbarView.setBackground(ContextCompat.getDrawable(this, R.drawable.snackbar_bg));
-        // Centralizar a mensagem
+
         TextView textView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
         textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        // Fonte em negrito
+
         textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
         snackbar.show();
     }

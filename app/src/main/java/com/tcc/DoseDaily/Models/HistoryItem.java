@@ -6,10 +6,10 @@ public class HistoryItem implements HistoricAdapter.Item {
     private String medicationName;
     private String consumptionTime;
     private int consumptionDay;
-    private String diaDaSemana; // Novo campo adicionado
+    private String diaDaSemana;
 
     public HistoryItem() {
-        // Construtor vazio necessário para Firebase
+
     }
 
     public HistoryItem(String medicationName, String consumptionTime, int consumptionDay, String diaDaSemana) {
