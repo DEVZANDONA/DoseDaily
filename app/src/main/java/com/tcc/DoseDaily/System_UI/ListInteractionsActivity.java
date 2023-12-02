@@ -1,13 +1,11 @@
 package com.tcc.DoseDaily.System_UI;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import androidx.appcompat.widget.SearchView;
@@ -31,7 +29,6 @@ import com.tcc.DoseDaily.API.ApiResponse;
 import com.tcc.DoseDaily.API.Interacao;
 import com.tcc.DoseDaily.API.InterageApiService;
 import com.tcc.DoseDaily.Adapters.PrincipioAtivoAdapter;
-import com.tcc.DoseDaily.Auth.LoginActivity;
 import com.tcc.DoseDaily.R;
 
 import java.util.ArrayList;
