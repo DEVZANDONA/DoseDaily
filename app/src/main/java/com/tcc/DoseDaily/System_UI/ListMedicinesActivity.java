@@ -54,12 +54,12 @@ public class ListMedicinesActivity extends AppCompatActivity {
         // Verifica se o usuário está autenticado
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
+
         if (user == null) {
-            // Se o usuário não estiver autenticado, redirecione-o para a tela de login
             Intent intent = new Intent(ListMedicinesActivity.this, LoginActivity.class);
             startActivity(intent);
-            finish(); // Encerre esta atividade para que o usuário não possa voltar pressionando o botão "voltar"
-            return; // Saia do método para evitar a execução do código restante
+            finish();
+            return;
         }
 
         drawerLayout = findViewById(R.id.drawer_layout2);

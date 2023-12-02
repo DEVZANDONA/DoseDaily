@@ -1,9 +1,11 @@
 package com.tcc.DoseDaily.Adapters;
 
-import android.graphics.Color;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,13 +15,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.tcc.DoseDaily.API.Interacao;
 import com.tcc.DoseDaily.R;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class PrincipioAtivoAdapter extends RecyclerView.Adapter<PrincipioAtivoAdapter.PrincipioAtivoViewHolder> {
+public class PrincipioAtivoAdapter extends RecyclerView.Adapter<PrincipioAtivoAdapter.PrincipioAtivoViewHolder> implements Filterable {
 
     private List<Interacao.PrincipioAtivo> principiosAtivos;
+    private List<Interacao.PrincipioAtivo> principiosAtivosFiltrados;
     private OnItemClickListener listener;
     private Set<Integer> selecionados = new HashSet<>();
 
@@ -29,6 +33,7 @@ public class PrincipioAtivoAdapter extends RecyclerView.Adapter<PrincipioAtivoAd
 
     public PrincipioAtivoAdapter(List<Interacao.PrincipioAtivo> principiosAtivos, OnItemClickListener listener) {
         this.principiosAtivos = principiosAtivos;
+        this.principiosAtivosFiltrados = principiosAtivos; // Inicialmente, ambas as listas são iguais
         this.listener = listener;
     }
 
@@ -41,7 +46,7 @@ public class PrincipioAtivoAdapter extends RecyclerView.Adapter<PrincipioAtivoAd
 
     @Override
     public void onBindViewHolder(@NonNull PrincipioAtivoViewHolder holder, int position) {
-        Interacao.PrincipioAtivo principioAtivo = principiosAtivos.get(position);
+        Interacao.PrincipioAtivo principioAtivo = principiosAtivosFiltrados.get(position);
         holder.bind(principioAtivo, listener);
 
         if (selecionados.contains(position)) {
@@ -53,7 +58,7 @@ public class PrincipioAtivoAdapter extends RecyclerView.Adapter<PrincipioAtivoAd
 
     @Override
     public int getItemCount() {
-        return principiosAtivos.size();
+        return principiosAtivosFiltrados.size();
     }
 
     public class PrincipioAtivoViewHolder extends RecyclerView.ViewHolder {
@@ -93,7 +98,42 @@ public class PrincipioAtivoAdapter extends RecyclerView.Adapter<PrincipioAtivoAd
         }
     }
 
-    // Adicione o método clearSelection aqui
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String filterPattern = charSequence.toString().toLowerCase().trim();
+
+                FilterResults results = new FilterResults();
+
+                if (TextUtils.isEmpty(filterPattern)) {
+                    results.values = principiosAtivos; // Se estiver vazio, retorna a lista original
+                    results.count = principiosAtivos.size();
+                } else {
+                    List<Interacao.PrincipioAtivo> filteredList = new ArrayList<>();
+
+                    for (Interacao.PrincipioAtivo principioAtivo : principiosAtivos) {
+                        if (principioAtivo.getNome().toLowerCase().contains(filterPattern)) {
+                            filteredList.add(principioAtivo);
+                        }
+                    }
+
+                    results.values = filteredList;
+                    results.count = filteredList.size();
+                }
+
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                principiosAtivosFiltrados = (List<Interacao.PrincipioAtivo>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
+
     public void clearSelection() {
         selecionados.clear();
         notifyDataSetChanged();

@@ -1,5 +1,6 @@
 package com.tcc.DoseDaily.System_UI;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import androidx.appcompat.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,12 +22,16 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.tcc.DoseDaily.API.ApiClient;
 import com.tcc.DoseDaily.API.ApiResponse;
 import com.tcc.DoseDaily.API.Interacao;
 import com.tcc.DoseDaily.API.InterageApiService;
 import com.tcc.DoseDaily.Adapters.PrincipioAtivoAdapter;
+import com.tcc.DoseDaily.Auth.LoginActivity;
 import com.tcc.DoseDaily.R;
 
 import java.util.ArrayList;
@@ -47,12 +53,41 @@ public class ListInteractionsActivity extends AppCompatActivity {
     private Integer segundoPrincipioAtivoId;
     private boolean snackbarExibida = false;
 
+    private NavigationView navigationView;
+
+    private String userId;
+
+    private SearchView searchView;
+
+    private SideBar sideBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medicamentos_api);
 
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        userId = user.getUid();
+
         initializeViews();
+
+        drawerLayout = findViewById(R.id.drawer_layout9);
+        navigationView = findViewById(R.id.nav_view9);
+
+        // Inicialize a SideBar
+        sideBar = new SideBar();
+        sideBar.setupDrawer(this, drawerLayout, navigationView, userId);
+
+        // Configuração do clique no ícone lateral (side_ic)
+        ImageView sideIcon = findViewById(R.id.side_ic);
+        sideIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Abra a SideBar quando o ícone for clicado
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
 
         apiService = ApiClient.getClient().create(InterageApiService.class);
 
@@ -63,10 +98,31 @@ public class ListInteractionsActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
+        SearchView searchView = findViewById(R.id.search);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         fab = findViewById(R.id.side_ic);
         drawerLayout = findViewById(R.id.drawer_layout2);
+
+        // Configuração do SearchView
+
+        searchView.setIconifiedByDefault(false);
+        searchView.setQueryHint("Pesquisar...");
+        searchView.setFocusable(false);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (principioAtivoAdapter != null) {
+                    principioAtivoAdapter.getFilter().filter(newText);
+                }
+                return true;
+            }
+        });
     }
 
     private void loadPrincipiosAtivosFromApi(String token) {

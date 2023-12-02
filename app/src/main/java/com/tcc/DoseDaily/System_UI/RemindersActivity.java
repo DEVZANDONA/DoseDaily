@@ -43,13 +43,12 @@ public class RemindersActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private List<Notifications> notificationsList;
-    private List<Notifications> filteredList;
     private NotificationsAdapter adapter;
-
     private String userId;
     private DrawerLayout drawerLayout;
     private SideBar sideBar;
     private NavigationView navigationView;
+    private List<Notifications> filteredList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,26 +64,24 @@ public class RemindersActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawer_layout3);
         navigationView = findViewById(R.id.nav_view3);
 
-        // Verifica se o usuário está autenticado
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
         userId = user.getUid();
 
-        // Inicialize a SideBar
         sideBar = new SideBar();
         sideBar.setupDrawer(this, drawerLayout, navigationView, userId);
 
-        // Configuração do clique no ícone lateral (side_ic)
         ImageView sideIcon = findViewById(R.id.side_ic);
-        sideIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Abra a SideBar quando o ícone for clicado
-                drawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
+        sideIcon.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Medicamento");
+
+        adapter = new NotificationsAdapter(notificationsList, (notification, position) -> {
+            Log.d("RemindersActivity", "Item Clicked: " + notification.getTitulo());
+            showCustomDialog(position);
+        });
+
+        recyclerView.setAdapter(adapter);
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -93,7 +90,9 @@ public class RemindersActivity extends AppCompatActivity {
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Notifications notification = snapshot.getValue(Notifications.class);
-                    notificationsList.add(notification);
+                    if (notification != null) {
+                        notificationsList.add(notification);
+                    }
                 }
 
                 applySearch("");
@@ -124,94 +123,44 @@ public class RemindersActivity extends AppCompatActivity {
         filteredList.clear();
 
         for (Notifications notification : notificationsList) {
-            if (notification.getCorpo() != null && notification.getTempoNotificacao() != null && notification.getTitulo() != null) {
-                if (notification.getCorpo().toLowerCase().contains(query.toLowerCase()) || notification.getTitulo().toLowerCase().contains(query.toLowerCase())) {
+            if (notification != null && notification.getTitulo() != null) {
+                String title = notification.getTitulo().toLowerCase(Locale.getDefault());
+                if (title.contains(query.toLowerCase(Locale.getDefault()))) {
                     filteredList.add(notification);
                 }
             }
         }
 
-        updateRecyclerView(filteredList);
-    }
-
-    private void updateRecyclerView(List<Notifications> filteredList) {
-        if (adapter == null) {
-            adapter = new NotificationsAdapter(filteredList, new NotificationsAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(Notifications notification, int position) {
-                    Log.d("RemindersActivity", "Item Clicked: " + notification.getTitulo());
-                    showCustomDialog(position); // Chama o diálogo de confirmação
-                }
-            });
-            recyclerView.setAdapter(adapter);
-        } else {
-            adapter.notifyDataSetChanged();
-        }
+        adapter.filterList(filteredList);
     }
 
     private void showCustomDialog(final int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        // Configurar o título do AlertDialog
         builder.setTitle("Você deseja fazer alguma alteração nesta notificação?");
-
-        // Configurar os botões do AlertDialog
-        builder.setPositiveButton("Modificar", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                modifyNotification(position);
-                Toast.makeText(RemindersActivity.this, "Notificação modificada", Toast.LENGTH_SHORT).show();
-            }
+        builder.setPositiveButton("Modificar", (dialog, which) -> {
+            modifyNotification(position);
+            Toast.makeText(RemindersActivity.this, "Notificação modificada", Toast.LENGTH_SHORT).show();
         });
 
-        builder.setNegativeButton("Deletar", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                deleteNotification(position);
-                Toast.makeText(RemindersActivity.this, "Notificação deletada", Toast.LENGTH_SHORT).show();
-            }
+        builder.setNegativeButton("Deletar", (dialog, which) -> {
+            deleteNotification(position);
+            Toast.makeText(RemindersActivity.this, "Notificação deletada", Toast.LENGTH_SHORT).show();
         });
 
-        // Criar e mostrar o AlertDialog
         AlertDialog dialog = builder.create();
-        dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_shape);
         dialog.show();
     }
 
-
     private void modifyNotification(final int position) {
-        // Obter a notificação selecionada
-        Notifications selectedNotification = filteredList.get(position);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, (view, year, monthOfYear, dayOfMonth) -> {
+            TimePickerDialog timePickerDialog = new TimePickerDialog(this, (view1, hourOfDay, minute) -> {
+                String newDateTime = String.format(Locale.getDefault(), "%04d-%02d-%02d %02d:%02d", year, monthOfYear + 1, dayOfMonth, hourOfDay, minute);
+                updateNotificationDateTime(position, newDateTime);
+            }, 0, 0, true);
 
-        // Criar um DatePickerDialog
-        DatePickerDialog datePickerDialog = new DatePickerDialog(
-                this,
-                new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        // Quando a data é definida, criar um TimePickerDialog
-                        TimePickerDialog timePickerDialog = new TimePickerDialog(
-                                RemindersActivity.this,
-                                new TimePickerDialog.OnTimeSetListener() {
-                                    @Override
-                                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                        // Quando a hora é definida, criar uma string no formato desejado
-                                        String newDateTime = String.format(Locale.getDefault(), "%04d-%02d-%02d %02d:%02d", year, monthOfYear + 1, dayOfMonth, hourOfDay, minute);
+            timePickerDialog.show();
+        }, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
 
-                                        // Atualizar a notificação com o novo horário
-                                        updateNotificationDateTime(position, newDateTime);
-                                    }
-                                },
-                                0, 0, true);
-
-                        // Mostrar o TimePickerDialog
-                        timePickerDialog.show();
-                    }
-                },
-                // Definir a data inicial para o DatePickerDialog como a data atual
-                Calendar.getInstance().get(Calendar.YEAR),
-                Calendar.getInstance().get(Calendar.MONTH),
-                Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
-
-        // Mostrar o DatePickerDialog
         datePickerDialog.show();
     }
 
@@ -219,26 +168,17 @@ public class RemindersActivity extends AppCompatActivity {
         Notifications selectedNotification = filteredList.get(position);
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Medicamento");
-
-        // Consulta no banco de dados usando os campos específicos
         Query query = databaseReference.orderByChild("corpo").equalTo(selectedNotification.getCorpo());
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    // Itera sobre os resultados, embora deva haver apenas um
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        // Recuperar os dados da notificação clicada
                         Notifications notification = snapshot.getValue(Notifications.class);
-
-                        // Modificar o tempoNotificacao
                         notification.setTempoNotificacao(newDateTime);
-
-                        // Atualizar no banco de dados
                         snapshot.getRef().setValue(notification);
 
-                        // Atualizar a lista e o RecyclerView se necessário
                         filteredList.set(position, notification);
                         adapter.notifyItemChanged(position);
 
@@ -258,28 +198,20 @@ public class RemindersActivity extends AppCompatActivity {
         Notifications selectedNotification = filteredList.get(position);
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Medicamento");
-
-        // Consulta no banco de dados usando os campos específicos
         Query query = databaseReference.orderByChild("corpo").equalTo(selectedNotification.getCorpo());
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    // Itera sobre os resultados, embora deva haver apenas um
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        snapshot.getRef().removeValue(new DatabaseReference.CompletionListener() {
-                            @Override
-                            public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
-                                if (!filteredList.isEmpty() && position >= 0 && position < filteredList.size()) {
-                                    // Remover da lista filtrada após a exclusão bem-sucedida
-                                    filteredList.remove(position);
-                                    // Notificar o RecyclerView sobre a mudança
-                                    adapter.notifyItemRemoved(position);
-                                    Toast.makeText(RemindersActivity.this, "Notificação deletada", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(RemindersActivity.this, "Lista vazia ou posição inválida", Toast.LENGTH_SHORT).show();
-                                }
+                        snapshot.getRef().removeValue((databaseError, databaseReference) -> {
+                            if (!filteredList.isEmpty() && position >= 0 && position < filteredList.size()) {
+                                filteredList.remove(position);
+                                adapter.notifyItemRemoved(position);
+                                Toast.makeText(RemindersActivity.this, "Notificação deletada", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(RemindersActivity.this, "Lista vazia ou posição inválida", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -295,4 +227,3 @@ public class RemindersActivity extends AppCompatActivity {
         });
     }
 }
-
