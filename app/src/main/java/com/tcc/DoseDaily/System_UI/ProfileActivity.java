@@ -13,7 +13,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ImageSpan;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -52,6 +56,7 @@ public class ProfileActivity extends AppCompatActivity  {
 
     private DrawerLayout drawerLayout;
     private SideBar sideBar;
+
     private NavigationView navigationView;
     private static final String SWITCH_STATE_PREF = "switch_state_pref";
 
@@ -61,6 +66,8 @@ public class ProfileActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_tela_perfil);
 
         IniciarComponentes();
+
+
 
         // Verifica se o usuário está autenticado
         FirebaseAuth auth = FirebaseAuth.getInstance();

@@ -138,16 +138,9 @@ public class RemindersActivity extends AppCompatActivity {
         if (adapter == null) {
             adapter = new NotificationsAdapter(filteredList, new NotificationsAdapter.OnItemClickListener() {
                 @Override
-                public void onItemClick(Notifications notification) {
-                    // Certifique-se de que o clique é detectado corretamente aqui
-                    // (adicionar um log para verificar)
+                public void onItemClick(Notifications notification, int position) {
                     Log.d("RemindersActivity", "Item Clicked: " + notification.getTitulo());
-                    // Adicione a lógica desejada para tratar o clique em uma notificação específica
-                }
-
-                @Override
-                public void onItemClick(int position) {
-                    showCustomDialog(position);
+                    showCustomDialog(position); // Chama o diálogo de confirmação
                 }
             });
             recyclerView.setAdapter(adapter);

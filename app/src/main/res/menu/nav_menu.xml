@@ -25,6 +25,10 @@
             android:id="@+id/nav_profile"
             android:icon="@drawable/user__3_"
             android:title="Perfil"/>
+        <item
+            android:id="@+id/nav_interactions"
+            android:icon="@drawable/danger"
+            android:title="Interações"/>
     </group>
     <item
         android:title="">

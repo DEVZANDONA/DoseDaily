@@ -117,29 +117,24 @@ public class HistoryActivity extends AppCompatActivity {
         historicoReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                itemList.clear(); // Limpar a lista para evitar duplicatas
+                itemList.clear();
 
                 // Adicionar todas as divisões com os dias da semana
                 String[] daysOfWeek = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 
                 for (String dayOfWeek : daysOfWeek) {
-                    itemList.add(new HistoricAdapter.SectionItem(traduzirDiaDaSemana(dayOfWeek)));
+                    HistoricAdapter.SectionItem sectionItem = new HistoricAdapter.SectionItem(traduzirDiaDaSemana(dayOfWeek));
 
-                    // Adicionar os itens correspondentes a cada divisão
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         HistoryItem historyItem = snapshot.getValue(HistoryItem.class);
 
                         if (historyItem != null && historyItem.getDiaDaSemana().equals(dayOfWeek)) {
-                            // Criar um objeto ContentItem
-                            HistoricAdapter.ContentItem contentItem = new HistoricAdapter.ContentItem(historyItem);
-
-                            // Adicionar o item à lista
-                            itemList.add(contentItem);
-
-                            // Adicione logs para verificar os dados
-                            Log.d("HistoricAdapter", "Item adicionado: " + historyItem.getMedicationName());
+                            // Adicionar conteúdo ao SectionItem associado
+                            sectionItem.addContentItem(new HistoricAdapter.ContentItem(historyItem));
                         }
                     }
+
+                    itemList.add(sectionItem);
                 }
 
                 historicAdapter.notifyDataSetChanged();
@@ -147,11 +142,12 @@ public class HistoryActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Lidar com erros, se necessário
                 Log.e("HistoricAdapter", "Erro ao recuperar dados: " + databaseError.getMessage());
             }
         });
     }
+
+
 
 
     private void clearHistory() {

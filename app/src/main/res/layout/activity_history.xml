@@ -13,7 +13,6 @@
         android:layout_height="match_parent"
         tools:context=".System_UI.HistoryActivity">
 
-        <!-- Adicione o TextView para exibir "Histórico de Consumo" -->
         <TextView
             android:id="@+id/tvHistoricoTitulo"
             android:layout_width="wrap_content"

@@ -19,7 +19,7 @@ public class DayDividerItemDecoration extends RecyclerView.ItemDecoration {
     public DayDividerItemDecoration(Context context, int dividerHeight) {
         this.dividerHeight = dividerHeight;
         paint = new Paint();
-        paint.setColor(ContextCompat.getColor(context, R.color.azul1));
+        paint.setColor(ContextCompat.getColor(context, R.color.black));
     }
 
     @Override

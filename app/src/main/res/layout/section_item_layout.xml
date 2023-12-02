@@ -20,8 +20,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="14sp"
-        android:textColor="@color/azul2"
+        android:textColor="@color/azul1"
         android:layout_below="@id/sectionTitle"
         android:layout_marginTop="8dp" />
 
+    <!-- Adiciona a seta para baixo -->
+    <ImageView
+        android:id="@+id/setaImageView"
+        android:layout_width="39dp"
+        android:layout_height="38dp"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/seta_lado"
+        android:rotation="180"/>
 </FrameLayout>

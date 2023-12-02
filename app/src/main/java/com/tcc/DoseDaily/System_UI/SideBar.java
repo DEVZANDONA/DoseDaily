@@ -35,7 +35,10 @@ public class SideBar {
                 } else if (itemId == R.id.nav_home) {
                     startNewActivity(context, HomePage.class, userId);
                     return true;
-                } else if (itemId == R.id.nav_logout) {
+                } else if (itemId == R.id.nav_interactions) {
+                    startNewActivity(context,ListInteractionsActivity.class, userId);
+                    return true;
+                }else if (itemId == R.id.nav_logout) {
                     FirebaseAuth.getInstance().signOut();
                     Intent loginIntent = new Intent(context, LoginActivity.class);
                     context.startActivity(loginIntent);
