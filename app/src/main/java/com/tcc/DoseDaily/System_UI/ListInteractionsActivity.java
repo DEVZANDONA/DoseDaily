@@ -258,11 +258,12 @@ public class ListInteractionsActivity extends AppCompatActivity {
                 .setPositiveButton("OK", (dialog, id) -> {
                     dialog.dismiss();
                     principiosAtivosSelecionados.clear();
-                    snackbarExibida = false;  // Reseta a flag para permitir que a Snackbar seja exibida novamente
-                    principioAtivoAdapter.clearSelection(); // Limpar a seleção
+                    snackbarExibida = false;
+                    principioAtivoAdapter.clearSelection();
                 });
 
         AlertDialog dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_shape);
         dialog.show();
     }
 

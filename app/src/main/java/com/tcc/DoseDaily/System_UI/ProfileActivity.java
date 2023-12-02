@@ -193,8 +193,11 @@ public class ProfileActivity extends AppCompatActivity  {
             }
         });
 
-        builder.create().show();
+        AlertDialog dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_shape); // Aplica o shape aqui
+        dialog.show();
     }
+
 
     private void openEditEmailDialog() {
         // Cria o AlertDialog
@@ -378,8 +381,12 @@ public class ProfileActivity extends AppCompatActivity  {
                         // Nada acontece, usuário optou por não excluir
                     }
                 });
-        builder.create().show();
+
+        AlertDialog dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_shape); // Aplica o shape aqui
+        dialog.show();
     }
+
 
     // Adicione este método para lidar com a exclusão da conta
     private void excluirContaUsuario() {

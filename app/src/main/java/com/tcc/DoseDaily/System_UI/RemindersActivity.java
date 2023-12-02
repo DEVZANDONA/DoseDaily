@@ -151,21 +151,31 @@ public class RemindersActivity extends AppCompatActivity {
 
     private void showCustomDialog(final int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Você deseja fazer alguma alteração nesta notificação?")
-                .setPositiveButton("Modificar", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        modifyNotification(position);
-                        Toast.makeText(RemindersActivity.this, "Notificação modificada", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .setNegativeButton("Deletar", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        deleteNotification(position);
-                        Toast.makeText(RemindersActivity.this, "Notificação deletada", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .show();
+
+        // Configurar o título do AlertDialog
+        builder.setTitle("Você deseja fazer alguma alteração nesta notificação?");
+
+        // Configurar os botões do AlertDialog
+        builder.setPositiveButton("Modificar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                modifyNotification(position);
+                Toast.makeText(RemindersActivity.this, "Notificação modificada", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        builder.setNegativeButton("Deletar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                deleteNotification(position);
+                Toast.makeText(RemindersActivity.this, "Notificação deletada", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Criar e mostrar o AlertDialog
+        AlertDialog dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_shape);
+        dialog.show();
     }
+
 
     private void modifyNotification(final int position) {
         // Obter a notificação selecionada

@@ -4,7 +4,9 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -16,6 +18,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import com.github.clans.fab.FloatingActionButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -259,8 +263,21 @@ public class DetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // Criar e exibir um AlertDialog com a mensagem fornecida
                 AlertDialog.Builder builder = new AlertDialog.Builder(DetailActivity.this);
-                builder.setTitle("De acordo com o Ministério da Saúde:");
+
+                // Configurar o restante do AlertDialog
                 builder.setMessage("A automedicação, muitas vezes vista como uma solução para o alívio imediato de alguns sintomas, pode trazer consequências mais graves do que se imagina.");
+
+                // Criar um TextView customizado para o título
+                TextView titleTextView = new TextView(DetailActivity.this);
+                titleTextView.setText("De acordo com o Ministério da Saúde:");
+                titleTextView.setTextSize(20); // Tamanho do texto do título em sp
+                titleTextView.setTypeface(null, Typeface.BOLD); // Negrito
+                titleTextView.setGravity(Gravity.CENTER); // Centralizar o texto
+                int paddingTop = getResources().getDimensionPixelSize(com.intuit.sdp.R.dimen._8sdp); // Defina a dimensão no arquivo de recursos (dimens.xml)
+                titleTextView.setPadding(0, paddingTop, 0, 0); // Adicione o padding superior
+
+                // Adicionar o TextView customizado como título
+                builder.setCustomTitle(titleTextView);
 
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
@@ -269,10 +286,14 @@ public class DetailActivity extends AppCompatActivity {
                     }
                 });
 
-                // Exibir o AlertDialog
-                builder.show();
+                AlertDialog dialog = builder.create();
+                dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_shape);
+                dialog.show();
             }
         });
+
+
+
 
     }
 

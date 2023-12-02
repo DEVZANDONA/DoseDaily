@@ -29,18 +29,21 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Verifica se a mensagem contém dados
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Mensagem de dados recebida: " + remoteMessage.getData());
-            String titulo = remoteMessage.getData().get("titulo");
-            String corpo = remoteMessage.getData().get("corpo");
+            String tituloRecebido = remoteMessage.getData().get("titulo");
+            String corpoRecebido = remoteMessage.getData().get("corpo");
 
-            Log.d(TAG, "Título: " + titulo);
-            Log.d(TAG, "Corpo: " + corpo);
+            Log.d(TAG, "Título Recebido: " + tituloRecebido);
+            Log.d(TAG, "Corpo Recebido: " + corpoRecebido);
 
             // Obtém o estado atual do switch
             boolean isSwitchOn = getSwitchState();
 
             // Se o switch estiver ligado, mostra a notificação
             if (isSwitchOn) {
-                showNotification(titulo, corpo);
+                // Atualiza o título para a mensagem padrão
+                String tituloPadrao = "Está na Hora de Tomar seu Remédio!!";
+                // Adiciona o título e corpo da notificação recebida abaixo do título padrão
+                showNotification(tituloPadrao, tituloRecebido + "\n" + corpoRecebido);
             } else {
                 Log.d(TAG, "Switch desligado. Não mostrando notificação.");
             }

@@ -29,7 +29,7 @@
             android:layout_marginEnd="12dp"
             app:iconifiedByDefault="false"
             app:searchHintIcon="@null"
-            app:queryHint="Search..."
+            app:queryHint="Pesquisar..."
             android:focusable="false"
             app:closeIcon="@drawable/lupa_icon"
             app:searchIcon="@drawable/lupa_icon"
