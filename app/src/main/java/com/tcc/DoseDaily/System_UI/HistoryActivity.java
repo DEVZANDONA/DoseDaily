@@ -148,8 +148,6 @@ public class HistoryActivity extends AppCompatActivity {
     }
 
 
-
-
     private void clearHistory() {
         historicoReference.removeValue()
                 .addOnCompleteListener(task -> {

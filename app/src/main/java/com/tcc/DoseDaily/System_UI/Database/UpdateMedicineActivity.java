@@ -16,7 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
+
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -69,7 +69,7 @@ public class UpdateMedicineActivity extends AppCompatActivity {
                             uri = data.getData();
                             updateImage.setImageURI(uri);
                         } else {
-                            Toast.makeText(UpdateMedicineActivity.this, "No Image Selected", Toast.LENGTH_SHORT).show();
+
                             updateImage.setImageResource(R.drawable.medicine);
                         }
                     }
@@ -131,7 +131,7 @@ public class UpdateMedicineActivity extends AppCompatActivity {
                         dialog.dismiss();
                     } else {
                         dialog.dismiss();
-                        Toast.makeText(UpdateMedicineActivity.this, "Erro ao obter URL da imagem: " + uriResult.getException().getMessage(), Toast.LENGTH_LONG).show();
+
                     }
                 });
             }
@@ -139,7 +139,7 @@ public class UpdateMedicineActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
                 dialog.dismiss();
-                Toast.makeText(UpdateMedicineActivity.this, "Erro ao fazer upload da imagem: " + e.getMessage(), Toast.LENGTH_LONG).show();
+
             }
         });
     }
@@ -166,10 +166,10 @@ public class UpdateMedicineActivity extends AppCompatActivity {
                         reference.delete();
                     }
 
-                    Toast.makeText(UpdateMedicineActivity.this, "Updated", Toast.LENGTH_SHORT).show();
+
                     finish();
                 } else {
-                    Toast.makeText(UpdateMedicineActivity.this, "Erro ao atualizar os dados: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+
                 }
             }
         });

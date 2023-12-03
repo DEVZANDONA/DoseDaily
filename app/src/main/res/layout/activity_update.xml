@@ -25,7 +25,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Update Data"
+                android:text="Atualizar Medicamento"
                 android:textSize="30sp"
                 android:textAlignment="center"
                 android:textColor="@color/azul1"/>

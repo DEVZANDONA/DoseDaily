@@ -13,7 +13,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
+
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -44,7 +44,7 @@ public class UploadMedicineActivity extends AppCompatActivity {
         uploadTopic = findViewById(R.id.uploadTopic);
         uploadLang = findViewById(R.id.uploadLang);
         saveButton = findViewById(R.id.saveButton);
-        defaultImage = getResources().getDrawable(R.drawable.medicine);
+        defaultImage = getResources().getDrawable(R.drawable.medicamentos);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(UploadMedicineActivity.this);
         builder.setCancelable(false);
@@ -54,12 +54,12 @@ public class UploadMedicineActivity extends AppCompatActivity {
         ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-                    if (result.getResultCode() == Activity.RESULT_OK){
+                    if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
                         uri = data.getData();
                         uploadImage.setImageURI(uri);
                     } else {
-                        Toast.makeText(UploadMedicineActivity.this, "No Image Selected", Toast.LENGTH_SHORT).show();
+
                     }
                 }
         );
@@ -74,7 +74,7 @@ public class UploadMedicineActivity extends AppCompatActivity {
             if (validateFields()) {
                 saveData();
             } else {
-                Toast.makeText(UploadMedicineActivity.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
+
             }
         });
     }
@@ -111,23 +111,22 @@ public class UploadMedicineActivity extends AppCompatActivity {
                             uploadData(userId);
                         } else {
                             dialog.dismiss();
-                            Toast.makeText(UploadMedicineActivity.this, "Erro ao obter URL da imagem: " + uriResult.getException().getMessage(), Toast.LENGTH_LONG).show();
+
                         }
                     });
                 }).addOnFailureListener(e -> {
                     dialog.dismiss();
-                    Toast.makeText(UploadMedicineActivity.this, "Erro ao fazer upload da imagem: " + e.getMessage(), Toast.LENGTH_LONG).show();
+
                 });
             }
         } else {
 
             dialog.dismiss();
-            Toast.makeText(UploadMedicineActivity.this, "You need to be logged in to perform this action", Toast.LENGTH_SHORT).show();
+
         }
     }
 
-
-    public void uploadData(String userId){
+    public void uploadData(String userId) {
         String title = uploadTopic.getText().toString();
         String desc = uploadDesc.getText().toString();
         String lang = uploadLang.getText().toString();
@@ -139,12 +138,21 @@ public class UploadMedicineActivity extends AppCompatActivity {
 
         ref.setValue(medicines).addOnCompleteListener(task -> {
             dialog.dismiss();
-            if (task.isSuccessful()){
-                Toast.makeText(UploadMedicineActivity.this, "Saved", Toast.LENGTH_SHORT).show();
+            if (task.isSuccessful()) {
+
+                Intent detailIntent = new Intent(UploadMedicineActivity.this, DetailActivity.class);
+                detailIntent.putExtra("Image", imageURL);
+                detailIntent.putExtra("Description", desc);
+                detailIntent.putExtra("Title", title);
+                detailIntent.putExtra("Key", uniqueKey);
+                detailIntent.putExtra("Language", lang);
+                startActivity(detailIntent);
+
                 finish();
             } else {
-                Toast.makeText(UploadMedicineActivity.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+
             }
         });
     }
 }
+

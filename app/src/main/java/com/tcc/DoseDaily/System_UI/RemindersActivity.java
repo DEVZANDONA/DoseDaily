@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TimePicker;
-import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -99,7 +99,7 @@ public class RemindersActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(RemindersActivity.this, "Erro ao obter dados do banco de dados", Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -138,12 +138,12 @@ public class RemindersActivity extends AppCompatActivity {
         builder.setTitle("Você deseja fazer alguma alteração nesta notificação?");
         builder.setPositiveButton("Modificar", (dialog, which) -> {
             modifyNotification(position);
-            Toast.makeText(RemindersActivity.this, "Notificação modificada", Toast.LENGTH_SHORT).show();
+
         });
 
         builder.setNegativeButton("Deletar", (dialog, which) -> {
             deleteNotification(position);
-            Toast.makeText(RemindersActivity.this, "Notificação deletada", Toast.LENGTH_SHORT).show();
+
         });
 
         AlertDialog dialog = builder.create();
@@ -181,14 +181,14 @@ public class RemindersActivity extends AppCompatActivity {
                         filteredList.set(position, notification);
                         adapter.notifyItemChanged(position);
 
-                        Toast.makeText(RemindersActivity.this, "Notificação modificada para " + newDateTime, Toast.LENGTH_SHORT).show();
+
                     }
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(RemindersActivity.this, "Erro ao modificar notificação", Toast.LENGTH_SHORT).show();
+
             }
         });
     }
@@ -208,20 +208,20 @@ public class RemindersActivity extends AppCompatActivity {
                             if (!filteredList.isEmpty() && position >= 0 && position < filteredList.size()) {
                                 filteredList.remove(position);
                                 adapter.notifyItemRemoved(position);
-                                Toast.makeText(RemindersActivity.this, "Notificação deletada", Toast.LENGTH_SHORT).show();
+
                             } else {
-                                Toast.makeText(RemindersActivity.this, "Lista vazia ou posição inválida", Toast.LENGTH_SHORT).show();
+
                             }
                         });
                     }
                 } else {
-                    Toast.makeText(RemindersActivity.this, "Notificação não encontrada", Toast.LENGTH_SHORT).show();
+
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(RemindersActivity.this, "Erro ao deletar notificação", Toast.LENGTH_SHORT).show();
+
             }
         });
     }

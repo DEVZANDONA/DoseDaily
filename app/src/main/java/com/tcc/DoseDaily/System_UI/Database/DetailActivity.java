@@ -14,12 +14,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.bumptech.glide.Glide;
 import com.github.clans.fab.FloatingActionButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -50,6 +50,8 @@ public class DetailActivity extends AppCompatActivity {
     ImageView bt_riscos;
     String userId;
 
+    ImageView detailImage;
+
     DatabaseReference medicamentoReference;
     DatabaseReference historicoReference;
 
@@ -62,6 +64,7 @@ public class DetailActivity extends AppCompatActivity {
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         medicamentoReference = FirebaseDatabase.getInstance().getReference("Medicamento");
 
+        detailImage = findViewById(R.id.detailImage);
         bt_riscos = findViewById(R.id.bt_riscos);
         edit_descricao = findViewById(R.id.edit_descricao);
         title = findViewById(R.id.title);
@@ -80,6 +83,8 @@ public class DetailActivity extends AppCompatActivity {
             key = bundle.getString("Key");
             imageUrl = bundle.getString("Image");
             medicamentoId = bundle.getString("MedicamentoId");
+
+            Glide.with(this).load(imageUrl).into(detailImage);
         }
 
         editButton.setOnClickListener(new View.OnClickListener() {
@@ -112,7 +117,7 @@ public class DetailActivity extends AppCompatActivity {
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
                                 int anoEscolhido = year;
-                                int mesEscolhido = month; // O mês começa do zero
+                                int mesEscolhido = month;
                                 int diaEscolhido = dayOfMonth;
 
                                 // Obter a hora atual
@@ -177,14 +182,14 @@ public class DetailActivity extends AppCompatActivity {
                                                                                         @Override
                                                                                         public void onComplete(@NonNull Task<Void> task) {
                                                                                             if (task.isSuccessful()) {
-                                                                                                Toast.makeText(DetailActivity.this, "Notificação agendada e dados armazenados!", Toast.LENGTH_SHORT).show();
+
                                                                                             } else {
-                                                                                                Toast.makeText(DetailActivity.this, "Falha ao agendar a notificação. Por favor, tente novamente.", Toast.LENGTH_SHORT).show();
+
                                                                                             }
                                                                                         }
                                                                                     });
                                                                         } else {
-                                                                            Toast.makeText(DetailActivity.this, "Falha ao obter o token do dispositivo. Por favor, tente novamente.", Toast.LENGTH_SHORT).show();
+
                                                                         }
                                                                     }
                                                                 });
@@ -240,9 +245,9 @@ public class DetailActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(DetailActivity.this, "Histórico registrado com sucesso!", Toast.LENGTH_SHORT).show();
+
                                 } else {
-                                    Toast.makeText(DetailActivity.this, "Falha ao registrar histórico. Por favor, tente novamente.", Toast.LENGTH_SHORT).show();
+
                                 }
                             }
                         });
@@ -311,7 +316,7 @@ public class DetailActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        Toast.makeText(DetailActivity.this, "Excluído", Toast.LENGTH_SHORT).show();
+
                         startActivity(new Intent(getApplicationContext(), ListMedicinesActivity.class));
                         finish();
                     }
@@ -319,7 +324,7 @@ public class DetailActivity extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(DetailActivity.this, "Erro ao excluir medicamento: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+
                     }
                 });
     }
