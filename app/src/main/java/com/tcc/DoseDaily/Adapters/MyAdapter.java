@@ -17,8 +17,12 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
+//Adaptador da lista de medicamentos
 public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
     private Context context;
+
+    //O construtor recebe o contexto da aplicação e uma lista de objetos Medicines
     private List<Medicines> dataList;
     public MyAdapter(Context context, List<Medicines> dataList) {
         this.context = context;

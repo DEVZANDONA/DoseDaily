@@ -17,18 +17,23 @@ import com.tcc.DoseDaily.R;
 import java.util.ArrayList;
 import java.util.List;
 
+//Adaptador personalizado para o historico
 public class HistoricAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public static final int CONTENT_TYPE = 1;
     private static final int SECTION_TYPE = 0;
 
 
+    //Recebe os itens do histórico
     private List<Item> itemList;
 
+
+    //Item é uma interface que define o método
     public interface Item {
         int getItemType();
     }
 
+    //Uma classe que implementa a interface Item e representa uma seção na lista
     public static class SectionItem implements Item {
         private String sectionText;
         private boolean isExpanded;
@@ -66,6 +71,7 @@ public class HistoricAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
+    //Uma classe que implementa a interface Item e representa um item de conteúdo na lista
     public static class ContentItem implements Item {
         private HistoryItem historyItem;
 
@@ -89,6 +95,7 @@ public class HistoricAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @NonNull
     @Override
+    //Infla o layout com base do tipo de item (SECTION_TYPE ou CONTENT_TYPE) e retorna o respectivo ViewHolder.
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view;
@@ -102,6 +109,8 @@ public class HistoricAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
+
+    //Vincula os dados do item à View no item.
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Item item = itemList.get(position);
@@ -137,6 +146,7 @@ public class HistoricAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
 
+    // Retorna o número total de itens na lista.
     @Override
     public int getItemCount() {
         return itemList.size();
@@ -171,6 +181,7 @@ public class HistoricAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
 
+    //Configura o título e a data com base no HistoryItem.
     static class ContentViewHolder extends RecyclerView.ViewHolder {
         private TextView recTitle;
         private TextView recData;
